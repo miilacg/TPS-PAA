@@ -38,7 +38,6 @@ int lerArquivo(TipoLabirinto *labirinto, char *nomeArquivo){
         labirinto->linhas = linhas;
         labirinto->colunas = colunas;
         labirinto->chaves = chaves;
-        printf ("Chaves %d\n", chaves);
         alocaEspaco(labirinto);
         while (!feof(arquivo)) { //enquanto nao for o fim do arquivo
             for (i = 0; i < labirinto->linhas; i++) { //preenche o espaco reservado de acordo com o arquivo
@@ -64,11 +63,13 @@ void imprimir(TipoLabirinto *labirinto) {
 }
 
 //encontrar a posicao do estudante e depois chamar essa funcao uma unica vez
-int movimenta_estudante(); 
+int movimenta_estudante(){
+	return 0;
+} 
 
 void imprimirResposta();
 
-void inicializaPosicoes(TipoLabirinto *labirinto, TipoEstudante *estudante){
+int inicializaPosicoes(TipoLabirinto *labirinto, TipoEstudante *estudante){
     int i, j;
     for (i = 0; i < labirinto->linhas; i++) {
         for (j = 0; j < labirinto->colunas; j++) {
@@ -82,4 +83,5 @@ void inicializaPosicoes(TipoLabirinto *labirinto, TipoEstudante *estudante){
             }
         }
     }
+    return movimenta_estudante();
 }

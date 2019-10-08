@@ -9,12 +9,11 @@
 #include <stdio.h>
 
 int main(){
-	int op, leuArquivo;
+	int op, leuArquivo, solucao;
 	char nomeArquivo[50];
 	TipoLabirinto labirinto;
 	TipoEstudante estudante;
-	
-    system("cls");
+
 	do{
 		 //menu para selecao das opcoes
 	    printf ("\n************************************************************************************");
@@ -36,10 +35,13 @@ int main(){
                 printf("Digite o nome do arquivo de texto (sem a extensao): ");
                 scanf("%s", nomeArquivo);
                 leuArquivo = lerArquivo(&labirinto, nomeArquivo);
+                system("cls");
                 break;
             case 2:
+            	system("cls");
                 if (leuArquivo){
-                    inicializaPosicoes(&labirinto, &estudante);
+                    solucao = inicializaPosicoes(&labirinto, &estudante);
+                    //printf ("%d \n", solucao);
                 }else{
                     printf("Carregue antes um arquivo de dados\n");
                 }
