@@ -17,14 +17,14 @@ int main(){
     system("cls");
 	do{
 		 //menu para selecao das opcoes
-	    printf ("\n*******************************************************************");
-	    printf ("\n*                                                                 *");
-	    printf ("\n*                  Escolha uma das opcoes abaixo                  *");
-	    printf ("\n*                1 - Carregar novo arquivo de dados               *");
-	    printf ("\n*                2 - Processar e exibir reposta                   *");
-	    printf ("\n*                3 - Sair do programa                             *");
-	    printf ("\n*                                                                 *");
-	    printf ("\n*******************************************************************");
+	    printf ("\n************************************************************************************");
+	    printf ("\n*                                                                                  *");
+	    printf ("\n*                          Escolha uma das opcoes abaixo                           *");
+	    printf ("\n*                        1 - Carregar novo arquivo de dados                        *");
+	    printf ("\n*                        2 - Processar e exibir reposta                            *");
+	    printf ("\n*                        3 - Sair do programa                                      *");
+	    printf ("\n*                                                                                  *");
+	    printf ("\n************************************************************************************");
 	    printf ("\n");
         do{
             printf ("Entre com a opcao valida: ");
