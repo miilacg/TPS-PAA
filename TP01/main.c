@@ -10,7 +10,9 @@
 
 int main(){
 	int op, leuArquivo;
-	char nomeArq[50];
+	char nomeArquivo[50];
+	TipoLabirinto labirinto;
+	TipoEstudante estudante;
 	
     system("cls");
 	do{
@@ -31,14 +33,13 @@ int main(){
         
         switch(op){
             case 1:
-                printf("Digite o nome do arquivo: ");
-                scanf("%s", nomeArq);
-                leuArquivo = //confere se recebeu um arquivo
-                printf("\n");
+                printf("Digite o nome do arquivo de texto (sem a extensao): ");
+                scanf("%s", nomeArquivo);
+                leuArquivo = lerArquivo(&labirinto, nomeArquivo);
                 break;
             case 2:
                 if (leuArquivo){
-                    
+                    inicializaPosicoes(&labirinto, &estudante);
                 }else{
                     printf("Carregue antes um arquivo de dados\n");
                 }
