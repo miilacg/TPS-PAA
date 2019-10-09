@@ -20,13 +20,13 @@ typedef struct Labirinto{
 typedef struct Analise{
 	int qtdChamadaRecursiva;
 	int qtdMovimento;
-	int nivelMAximo;
+	int nivelMaximo;
 }TipoAnalise;
 
 void alocaEspaco(TipoLabirinto *Labirinto);
 int lerArquivo(TipoLabirinto *labirinto, char *nomeArq);
 void imprimir(TipoLabirinto *labirinto);
-int movimenta_estudante(); //encontrar a posicao do estudante e depois chamar essa funcao uma unica vez
+int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int x, int y, int caminho[labirinto->linhas][labirinto->colunas]); //encontrar a posicao do estudante e depois chamar essa funcao uma unica vez
 void imprimirResposta();
-int inicializaPosicoes(TipoLabirinto *labirinto, TipoEstudante *estudante);
+int inicializacoes(TipoLabirinto *labirinto, TipoEstudante *estudante, TipoAnalise *analise);
 

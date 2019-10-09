@@ -63,14 +63,17 @@ void imprimir(TipoLabirinto *labirinto) {
 }
 
 //encontrar a posicao do estudante e depois chamar essa funcao uma unica vez
-int movimenta_estudante(){
-	return 0;
+int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int x, int y, int caminho[labirinto->linhas][labirinto->colunas]){
+
 } 
 
 void imprimirResposta();
 
-int inicializaPosicoes(TipoLabirinto *labirinto, TipoEstudante *estudante){
-    int i, j;
+int inicializacoes(TipoLabirinto *labirinto, TipoEstudante *estudante, TipoAnalise *analise){
+    int i, j, x, y;
+    int caminho[labirinto->linhas][labirinto->colunas];
+    
+    //inicializa posicao
     for (i = 0; i < labirinto->linhas; i++) {
         for (j = 0; j < labirinto->colunas; j++) {
             if (labirinto->espaco[i][j] == 0) {//se a posicao for a que o estudante esta
@@ -80,8 +83,22 @@ int inicializaPosicoes(TipoLabirinto *labirinto, TipoEstudante *estudante){
                 estudante->pAtual.y = j;
                 estudante->pFinal.x = 0;
                 estudante->pFinal.y = 0;
+                x = estudante->pAtual.x;
+                y = estudante->pAtual.y;
             }
         }
     }
-    return movimenta_estudante();
+    
+    //inicializa caminho
+    for (i = 0; i < labirinto->linhas; i++) {
+        for (j = 0; j < labirinto->colunas; j++)
+            caminho[i][j] = 0;
+    }
+    
+    //inicializa analise
+    analise->qtdChamadaRecursiva = 0;
+	analise->qtdMovimento = 0;
+	analise->nivelMaximo = 0;
+    
+    return movimenta_estudante(estudante, labirinto, analise, x, y, caminho);
 }

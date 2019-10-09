@@ -11,6 +11,7 @@
 int main(){
 	int op, leuArquivo, solucao;
 	char nomeArquivo[50];
+	TipoAnalise analise;
 	TipoLabirinto labirinto;
 	TipoEstudante estudante;
 
@@ -39,11 +40,30 @@ int main(){
                 break;
             case 2:
             	system("cls");
+            	printf ("\n");
                 if (leuArquivo){
-                    solucao = inicializaPosicoes(&labirinto, &estudante);
-                    //printf ("%d \n", solucao);
+                    solucao = inicializacoes(&labirinto, &estudante, &analise);
+                    if (modoAnalise){//contabilizar as analises
+                    	printf ("\nModo analise ativo\n\n"); 
+                    	if(solucao){
+							printf("O estudante se movimentou %d vezes e chegou na coluna %d da linha %d\n", analise.qtdMovimento, estudante.pFinal.y, estudante.pFinal.x);
+							printf("Numero total de chamadas recursivas: %d\n", analise.qtdChamadaRecursiva);
+							printf("Nivel maximo de recursao: %d\n", analise.nivelMaximo);
+						}else{
+							printf("O estudante se movimentou %d vezes e percebeu que o labirinto nao tem saida\n", analise.qtdMovimento);
+							printf("Numero total de chamadas recursivas: %d\n", analise.qtdChamadaRecursiva);
+							printf("Nivel maximo de recursao: %d\n", analise.nivelMaximo);
+						}
+					}else{
+						printf ("\nModo analise nao ativo\n\n");
+						if(solucao){
+							printf("O estudante se movimentou %d vezes e chegou na coluna %d da linha %d\n", analise.qtdMovimento, estudante.pFinal.y, estudante.pFinal.x);
+						}else{
+							printf("O estudante se movimentou %d vezes e percebeu que o labirinto nao tem saida\n", analise.qtdMovimento);
+						}
+					}
                 }else{
-                    printf("Carregue antes um arquivo de dados\n");
+                    printf("\nCarregue antes um arquivo de dados\n");
                 }
                 break;
         }
