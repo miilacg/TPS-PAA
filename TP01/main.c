@@ -46,7 +46,7 @@ int main(){
                     if (modoAnalise){//contabilizar as analises
                     	printf ("\nModo analise ativo\n\n"); 
                     	if(solucao){
-							printf("O estudante se movimentou %d vezes e chegou na coluna %d da linha %d\n", analise.qtdMovimento, estudante.pFinal.y, estudante.pFinal.x);
+							printf("O estudante se movimentou %d vezes e chegou na coluna %d da primeira linha\n", analise.qtdMovimento, estudante.pFinal.y, estudante.pFinal.x);
 							printf("Numero total de chamadas recursivas: %d\n", analise.qtdChamadaRecursiva);
 							printf("Nivel maximo de recursao: %d\n", analise.nivelMaximo);
 						}else{
@@ -57,7 +57,7 @@ int main(){
 					}else{
 						printf ("\nModo analise nao ativo\n\n");
 						if(solucao){
-							printf("O estudante se movimentou %d vezes e chegou na coluna %d da linha %d\n", analise.qtdMovimento, estudante.pFinal.y, estudante.pFinal.x);
+							printf("O estudante se movimentou %d vezes e chegou na coluna %d da primeira linha\n", analise.qtdMovimento, estudante.pFinal.y, estudante.pFinal.x);
 						}else{
 							printf("O estudante se movimentou %d vezes e percebeu que o labirinto nao tem saida\n", analise.qtdMovimento);
 						}

@@ -1,4 +1,4 @@
-#define modoAnalise 1 //analisa a quantidade de chamadas recursivas e o nível maximo de recursao alcancada
+#define modoAnalise 1//analisa a quantidade de chamadas recursivas e o nível maximo de recursao alcancada
 
 typedef struct Posicao{
     int x, y; //y é coluna e x é linha
@@ -24,9 +24,8 @@ typedef struct Analise{
 }TipoAnalise;
 
 void alocaEspaco(TipoLabirinto *Labirinto);
-int lerArquivo(TipoLabirinto *labirinto, char *nomeArq);
+int lerArquivo(TipoLabirinto *labirinto, char *nomeArquivo);
 void imprimir(TipoLabirinto *labirinto);
 int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int x, int y, int caminho[labirinto->linhas][labirinto->colunas]); //encontrar a posicao do estudante e depois chamar essa funcao uma unica vez
-void imprimirResposta();
 int inicializacoes(TipoLabirinto *labirinto, TipoEstudante *estudante, TipoAnalise *analise);
 
