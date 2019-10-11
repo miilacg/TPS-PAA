@@ -46,7 +46,6 @@ int main(){
             	printf ("\n");
                 if (leuArquivo){
                     solucao = inicializacoes(&labirinto, &estudante, &analise);
-                    printf ("Solucao: %d", solucao);
                     if (modoAnalise){//contabilizar as analises
                     	printf ("\nModo analise ativo\n\n"); 
                     	if(solucao){
