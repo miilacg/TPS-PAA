@@ -27,7 +27,7 @@ int lerArquivo(TipoLabirinto *labirinto, char *nomeArquivo){
     strcat(caminhoArquivo, ".txt");
     arquivo = fopen(caminhoArquivo, "r"); //une as partes que compoem o caminhoArquivo
     if (arquivo == NULL) {
-        printf("Erro de leitura do arquivo\n");
+        printf("\nErro de leitura do arquivo\n");
         return 0; //retorna 0 caso nao seja possivel ler o arquivo
     }else{
         fscanf(arquivo, "%d %d %d\n", &linhas, &colunas, &chaves); //faz a lelitura de quantas linhas e colunas tera no labirinto
@@ -100,6 +100,18 @@ int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, Tipo
 	qtdChave = labirinto->chaves - cont;
 		
 	if (estudante->pAtual.x == 0 && labirinto->espaco[x][y] != '2'){
+		if (labirinto->espaco[x][y] == '3'){ //verifica se a posicao e uma porta
+    		if (qtdChave > 0){ //verifica se tem chave suficiente
+    			chave[x][y] = 1; 
+				estudante->pFinal.x = x;
+				estudante->pFinal.y = y;
+				analise->qtdMovimento++;
+				printf("Linha: %d Coluna: %d\n", estudante->pFinal.x, estudante->pFinal.y);
+				return 1;
+			}
+			return 0;
+		}
+		
 		estudante->pFinal.x = x;
 		estudante->pFinal.y = y;
 		analise->qtdMovimento++;
@@ -162,7 +174,7 @@ int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, Tipo
 	return 0;	
 }
 
-int inicializacoes(TipoLabirinto *labirinto, TipoEstudante *estudante, TipoAnalise *analise){
+int inicializacoes(TipoLabirinto *labirinto, TipoEstudante *estudante, TipoAnalise *analise, int opcao){
     int i, j, x, y;
     int caminho[labirinto->linhas][labirinto->colunas];
     int chave[labirinto->linhas][labirinto->colunas];
@@ -203,6 +215,15 @@ int inicializacoes(TipoLabirinto *labirinto, TipoEstudante *estudante, TipoAnali
 	analise->nivelMaximo = -1; //inicializa com -1 pois a primeira chamada nao e recursiva
 	analise->maxAux = 0;
     
-    // Verifica se o problema tem solucao
-    return (movimenta_estudante(estudante, labirinto, analise, caminho, x, y, chave));
+    if (opcao == 1){
+		return (movimenta_estudante(estudante, labirinto, analise, caminho, x, y, chave));
+	}else{
+		if (opcao == 2){
+			return (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x, y, chave));
+		}
+	}	
+}
+
+int movimentaEstudanteExtra(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int caminho[labirinto->linhas][labirinto->colunas], int x, int y, int chave[labirinto->linhas][labirinto->colunas]){ //encontrar a posicao do estudante e depois chamar essa funcao uma unica vez
+	return 1;
 }
