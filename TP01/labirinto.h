@@ -1,4 +1,4 @@
-#define modoAnalise 0//analisa a quantidade de chamadas recursivas e o nível maximo de recursao alcancada
+#define modoAnalise 1//analisa a quantidade de chamadas recursivas e o nível maximo de recursao alcancada
 
 typedef struct Posicao{
     int x, y; //y é coluna e x é linha
@@ -21,6 +21,7 @@ typedef struct Analise{
 	int qtdChamadaRecursiva;
 	int qtdMovimento;
 	int nivelMaximo;
+	int maxAux;
 }TipoAnalise;
 
 void alocaEspaco(TipoLabirinto *Labirinto);
