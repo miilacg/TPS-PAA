@@ -66,17 +66,33 @@ void imprimir(TipoLabirinto *labirinto){
     }
 }
 
+void imprimirCaminho(TipoLabirinto *labirinto, int caminho[labirinto->linhas][labirinto->colunas]) {
+    int i, j;
+    printf("\n\n");
+    printf("  ");
+    for (j = 0; j < labirinto->colunas; j++)
+        printf("\t%d ", j);
+
+    for (i = 0; i < labirinto->linhas; i++) {
+        printf("\n\n%d ", i);
+        for (j = 0; j < labirinto->colunas; j++) {
+            printf("\t%d ", caminho[i][j]);
+        }
+    }
+    printf ("\n");
+}
+
 //encontrar a posicao do estudante e depois chamar essa funcao uma unica vez
 int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int caminho[labirinto->linhas][labirinto->colunas], int x, int y){
-    
+    //("Linha: %d Coluna: %d\n", x, y);
 	estudante->pAtual.x = x;
 	estudante->pAtual.y = y;
 	
 	if (estudante->pAtual.x == 0 && labirinto->espaco[x][y] != '2'){
 		estudante->pFinal.x = x;
 		estudante->pFinal.y = y;
-		
-		//printf("Linhas: %d Coluna: %d\n", x, y);
+		analise->qtdMovimento++;
+		printf("Linhas: %d Coluna: %d\n", x, y);
 		return 1;
 	}
 	 
@@ -84,6 +100,7 @@ int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, Tipo
     if ((x >= 0) && (x < labirinto->linhas) && (y >= 0) && (y < labirinto->colunas) && (labirinto->espaco[x][y] != '2') && (caminho[x][y] == 0)){
     	caminho[x][y] = 1;    	
     	analise->qtdMovimento++;
+    	imprimirCaminho(labirinto, caminho);
     	
 		//tenta movimentar para cima
 		if (movimenta_estudante(estudante, labirinto, analise, caminho, x - 1, y)){
@@ -139,7 +156,7 @@ int inicializacoes(TipoLabirinto *labirinto, TipoEstudante *estudante, TipoAnali
     
     //inicializa analise
     analise->qtdChamadaRecursiva = -1; //inicializa com -1 pois a primeira chamada nao e recursiva
-	analise->qtdMovimento = 0;
+	analise->qtdMovimento = -1; //no primeiro teste nao ocorre movimento
 	analise->nivelMaximo = -1; //inicializa com -1 pois a primeira chamada nao e recursiva
     
     // Verifica se o problema tem solucao

@@ -16,7 +16,7 @@ int main(){
 	TipoEstudante estudante;
 
 	do{
-		 //menu para selecao das opcoes
+		//menu para selecao das opcoes
 	    printf ("\n************************************************************************************");
 	    printf ("\n*                                                                                  *");
 	    printf ("\n*                          Escolha uma das opcoes abaixo                           *");
@@ -36,13 +36,17 @@ int main(){
                 printf("Digite o nome do arquivo de texto (sem a extensao): ");
                 scanf("%s", nomeArquivo);
                 leuArquivo = lerArquivo(&labirinto, nomeArquivo);
-                system("cls");
+                if (leuArquivo){
+                	system("cls");
+                	printf ("\nArquivo lido com sucesso!\n\n");
+            	}
                 break;
             case 2:
             	system("cls");
             	printf ("\n");
                 if (leuArquivo){
                     solucao = inicializacoes(&labirinto, &estudante, &analise);
+                    printf ("Solucao: %d", solucao);
                     if (modoAnalise){//contabilizar as analises
                     	printf ("\nModo analise ativo\n\n"); 
                     	if(solucao){
