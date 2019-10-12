@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 //0 - celula onde o estudante está incialmente
 //1 - celula vazia
@@ -142,8 +143,7 @@ int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, Tipo
 				//tenta movimentar para baixo
 				if (movimenta_estudante(estudante, labirinto, analise, caminho, x + 1, y, chave)){
 					return 1;
-				}
-				
+				}				
 				chave[x][y] = 0; //recebe 0 caso tenha que voltar pela porta
 			}
 			return 0;
@@ -164,8 +164,7 @@ int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, Tipo
 		//tenta movimentar para baixo
 		if (movimenta_estudante(estudante, labirinto, analise, caminho, x + 1, y, chave)){
 			return 1;
-		}
-	
+		}	
 		return 0;
 	}	
 	
@@ -257,6 +256,7 @@ int movimentaEstudanteExtra(TipoEstudante *estudante, TipoLabirinto *labirinto, 
 				estudante->pFinal.y = y;
 				analise->qtdMovimento++;
 				printf("Linha: %d Coluna: %d\n", estudante->pFinal.x, estudante->pFinal.y);
+				printf ("Chaves: %d", qtdChave);
 				return 1;
 			}
 			return 0;
@@ -273,6 +273,7 @@ int movimentaEstudanteExtra(TipoEstudante *estudante, TipoLabirinto *labirinto, 
     if ((x >= 0) && (x < labirinto->linhas) && (y >= 0) && (y < labirinto->colunas) && (labirinto->espaco[x][y] != '2') && (caminho[x][y] == 0)){
     	caminho[x][y] = 1; //informa que já passou pelo caminho	
     	analise->qtdMovimento++;
+    	imprimirMatriz(labirinto, chave);
     	printf("Linha: %d Coluna: %d\n", x, y);
     	
     	if (labirinto->espaco[x][y] == '4'){ //verifica se a posicao tem uma chave
@@ -293,8 +294,7 @@ int movimentaEstudanteExtra(TipoEstudante *estudante, TipoLabirinto *labirinto, 
 			if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x + 1, y, chave)){
 				return 1;
 			}
-		}
-		
+		}		
 		    	
     	if (labirinto->espaco[x][y] == '3'){ //verifica se a posicao e uma porta
     		if (qtdChave > 0){ //verifica se tem chave suficiente
@@ -336,14 +336,64 @@ int movimentaEstudanteExtra(TipoEstudante *estudante, TipoLabirinto *labirinto, 
 		if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x + 1, y, chave)){
 			return 1;
 		}			
-		return 0;
-	}	
-	
-	
+		return 0;		
+	}
+		
 	if (analise->nivelMaximo < analise->maxAux){
 		analise->nivelMaximo = analise->maxAux;		
 	}
-	
 	analise->maxAux = 0;
 	return 0;	
+}
+
+int geraLabirinto(int linhas, int colunas, int qtdChaves, int qtdPortas, int qtdParedes) {
+    int i, j, linha, coluna;
+    int labirinto[linhas][colunas];
+    char c = '\n';
+    FILE *arquivo;
+
+    arquivo = fopen("C:\\Users\\Camila\\Desktop\\Camila\\Trabalho\\Superior\\PAA\\TPS-PAA\\TP01\\Arquivo-Teste.txt", "w+");
+    if (arquivo == NULL){
+        printf("\nErro\n");
+	}else{
+		//inicializando todas as posicoes com 1
+        for (i = 0; i < linhas; i++) {
+            for (j = 0; j < colunas; j++) {
+                labirinto[i][j] = 1;
+            }
+        }
+		
+        fprintf(arquivo, "%d %d %d", linhas, colunas, qtdChaves);//escrevendo a primeira linha do arquivo
+        fputc(c, arquivo); //quebra de linha dentro do arquivo
+        
+        linha = rand() % linhas;
+        coluna = rand() % colunas;
+        labirinto[linha][coluna] = 0; //inicializacao do estudante
+
+        for (i = 0; i < qtdParedes; i++) {
+        	while (labirinto[linha][coluna] != 1){ // nao deixa inserir onde ja tem uma parede, porta ou estudante
+        		linha = rand()%linhas;
+            	coluna = rand()%colunas;
+        	}     
+        	labirinto[linha][coluna] = 2; //inicializando as paredes
+        }
+        
+        for (i = 0; i < qtdPortas; i++) {
+        	while (labirinto[linha][coluna] != 1){ // nao deixa inserir onde ja tem uma parede, porta ou estudante
+        		linha = rand()%linhas;
+            	coluna = rand()%colunas;
+        	}
+			labirinto[linha][coluna] = 3; //inicializando as portas	         
+        }
+
+
+        for (i = 0; i < linhas; i++) {
+            for (j = 0; j < colunas; j++) {
+                fprintf(arquivo, "%d", labirinto[i][j]);
+            }
+            fputc(c, arquivo);
+        }
+    }
+    fclose(arquivo);
+    return 1;
 }

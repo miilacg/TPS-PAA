@@ -9,7 +9,9 @@
 #include <stdio.h>
 
 int main(){
-	int op, leuArquivo, solucao, opcao;
+	srand(time(NULL)); //usado para funcao rand gerar numeros diferentes em um pequeno tempo
+	
+	int op, leuArquivo, solucao, opcao, linhas, colunas, qtdChaves, qtdParedes, qtdPortas, tamanho;
 	char nomeArquivo[50];
 	TipoAnalise analise;
 	TipoLabirinto labirinto;
@@ -17,14 +19,15 @@ int main(){
 
 	do{
 		//menu para selecao das opcoes
-	    printf ("\n************************************************************************************");
-	    printf ("\n*                                                                                  *");
-	    printf ("\n*                          Escolha uma das opcoes abaixo                           *");
-	    printf ("\n*                        1 - Carregar novo arquivo de dados                        *");
-	    printf ("\n*                        2 - Processar e exibir reposta                            *");
-	    printf ("\n*                        3 - Sair do programa                                      *");
-	    printf ("\n*                                                                                  *");
-	    printf ("\n************************************************************************************");
+	    printf ("\n******************************************************************************************************");
+	    printf ("\n*                                                                                                    *");
+	    printf ("\n*                                   Escolha uma das opcoes abaixo                                    *");
+	    printf ("\n*                                 1 - Carregar novo arquivo de dados                                 *");
+	    printf ("\n*                                 2 - Criar labirinto                                                *");
+	    printf ("\n*                                 3 - Processar e exibir reposta                                     *");
+	    printf ("\n*                                 4 - Sair do programa                                               *");
+	    printf ("\n*                                                                                                    *");
+	    printf ("\n******************************************************************************************************");
 	    printf ("\n");
         do{
             printf ("Entre com a opcao valida: ");
@@ -41,19 +44,61 @@ int main(){
                 	printf ("\nArquivo lido com sucesso!\n\n");
             	}
             break;
-            case 2:            	
+            case 2:
+            	system ("cls");
+            	printf("\n**************************************Monte seu labirinto**************************************\n");
+	        	printf("\n Informe a quantidade de linhas desejada: ");
+                scanf("%d", &linhas);
+                printf(" Informe a quantidade de colunas desejada: ");
+                scanf("%d", &colunas);
+                tamanho = linhas * colunas;
+                printf(" Informe a quantidade de chaves inicial: ");
+                scanf("%d", &qtdChaves);
+                printf(" Informe a quantidade de portas desejada: ");
+                scanf("%d", &qtdPortas);                
+            	while (tamanho < qtdPortas){
+                	printf ("\n A quantidade de portas precisa ser menor que o tamanho do labirinto. Entre com outro valor: ");
+                	scanf("%d", &qtdPortas);
+				}
+                printf(" Informe a quantidade de paredes desejada: ");
+                scanf("%d", &qtdParedes);
+                while (tamanho < qtdParedes){
+                	printf ("\n A quantidade de paredes precisa ser menor que o tamanho do labirinto. Entre com outro valor: ");
+                	scanf("%d", &qtdParedes);
+				}	
+				while (tamanho < qtdParedes + qtdPortas){
+					printf(" \nO numero total de portas e paredes tem que ser menor que o tamanho do labirinto.\n");
+					printf (" Informe a quantidade de portas desejada: ");
+	                scanf("%d", &qtdPortas);                
+	            	while (tamanho < qtdPortas){
+	                	printf ("\n A quantidade de portas precisa ser menor que o tamanho do labirinto. Entre com outro valor: ");
+	                	scanf("%d", &qtdPortas);
+					}
+					printf(" \nO numero total de portas e paredes tem que ser menor que o tamanho do labirinto.\n");
+	                printf(" Informe a quantidade de paredes desejada: ");
+	                scanf("%d", &qtdParedes);
+	                while (tamanho < qtdParedes){
+	                	printf (" \nA quantidade de paredes precisa ser menor que o tamanho do labirinto. Entre com outro valor: ");
+	                	scanf("%d", &qtdParedes);
+					}	
+				}
+                if(geraLabirinto(linhas, colunas, qtdChaves, qtdPortas, qtdParedes))
+                	printf ("\nArquivo criado com sucesso. Nome do arquivo: Arquivo-Teste\n");
+	        break;
+            case 3:            	
             	system("cls");
             	if (leuArquivo){				
 					//menu para selecao das opcoes
-				    printf ("\n************************************************************************************");
-				    printf ("\n*                                                                                  *");
-				    printf ("\n*          Escolha uma das opcoes abaixo de acordo com os dados do arquivo         *");
-				    printf ("\n*               1 - Nao permiti que o estudante pegue chaves no chao               *");
-				    printf ("\n*               2 - Permiti que o estudante pegue chaves no chao                   *");
-				    printf ("\n*               3 - Voltar                                                         *");
-				    printf ("\n*               4 - Sair do programa                                               *");
-				    printf ("\n*                                                                                  *");
-				    printf ("\n************************************************************************************");
+	                printf ("\n******************************************************************************************************");
+				    printf ("\n*                                                                                                    *");
+				    printf ("\n*                   Escolha uma das opcoes abaixo de acordo com os dados do arquivo                  *");
+				    printf ("\n*                        1 - Nao permiti que o estudante pegue chaves no chao                        *");
+				    printf ("\n*                        2 - Permiti que o estudante pegue chaves no chao                            *");
+				    printf ("\n*                        3 - Voltar                                                                  *");
+				    printf ("\n*                        4 - Sair do programa                                                        *");
+				    printf ("\n*                                                                                                    *");
+				    printf ("\n******************************************************************************************************");
+
 				    printf ("\n");
 			        do{
 			            printf ("Entre com a opcao valida: ");
@@ -119,7 +164,7 @@ int main(){
             	}
 	        break;
         }
-    }while(op!=3);   
+    }while(op!=4);   
 	 
     return 0;
 }
