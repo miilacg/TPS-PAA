@@ -43,7 +43,6 @@ int lerArquivo(TipoLabirinto *labirinto, char *nomeArquivo){
                 }
             }
         }
-        //imprimir(labirinto);
 	}
     fclose(arquivo);
     return 1; //retorna 1 se a leitura for feita com sucesso
@@ -82,7 +81,7 @@ void imprimirMatriz(TipoLabirinto *labirinto, int caminho[labirinto->linhas][lab
 
 //encontrar a posicao do estudante e depois chamar essa funcao uma unica vez
 int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int caminho[labirinto->linhas][labirinto->colunas], int x, int y, int chave[labirinto->linhas][labirinto->colunas]){
-	int i, j, cont, qtdChave;
+	int i, j, cont = 0, qtdChave;
 	estudante->pAtual.x = x;
 	estudante->pAtual.y = y;
 	
@@ -100,7 +99,7 @@ int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, Tipo
 	qtdChave = labirinto->chaves - cont;
 		
 	if (estudante->pAtual.x == 0 && labirinto->espaco[x][y] != '2'){
-		if (labirinto->espaco[x][y] == '3'){ //verifica se a posicao e uma porta
+		if (labirinto->espaco[x][y] == '3'){ //verifica se a posicao e uma porta			
     		if (qtdChave > 0){ //verifica se tem chave suficiente
     			chave[x][y] = 1; 
 				estudante->pFinal.x = x;
@@ -144,6 +143,8 @@ int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, Tipo
 				if (movimenta_estudante(estudante, labirinto, analise, caminho, x + 1, y, chave)){
 					return 1;
 				}
+				
+				chave[x][y] = 0; //recebe 0 caso tenha que voltar pela porta
 			}
 			return 0;
 		}
@@ -164,13 +165,16 @@ int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, Tipo
 		if (movimenta_estudante(estudante, labirinto, analise, caminho, x + 1, y, chave)){
 			return 1;
 		}
+	
 		return 0;
 	}	
+	
+	
 	if (analise->nivelMaximo < analise->maxAux){
 		analise->nivelMaximo = analise->maxAux;		
 	}
+	
 	analise->maxAux = 0;
-	chave[x][y] = 0; //recebe 0 caso tenha que voltar pela porta
 	return 0;	
 }
 
@@ -225,5 +229,121 @@ int inicializacoes(TipoLabirinto *labirinto, TipoEstudante *estudante, TipoAnali
 }
 
 int movimentaEstudanteExtra(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int caminho[labirinto->linhas][labirinto->colunas], int x, int y, int chave[labirinto->linhas][labirinto->colunas]){ //encontrar a posicao do estudante e depois chamar essa funcao uma unica vez
-	return 1;
+	int i, j, perde = 0, ganha = 0, qtdChave;
+	estudante->pAtual.x = x;
+	estudante->pAtual.y = y;
+	
+	analise->maxAux++;
+	analise->qtdChamadaRecursiva++;
+	
+	for (i = 0; i < labirinto->linhas; i++) { //for usado para contar quantas chaves tem na matriz chave
+        for (j = 0; j < labirinto->colunas; j++) {
+            if (chave[i][j] == 1) { 
+                perde++; //quantidade de chaves que eu já usei
+            }
+            if (chave[i][j] == 2) { 
+                ganha++; //quantidade de chaves que eu peguei
+            }
+        }
+    }
+	
+	qtdChave = (labirinto->chaves - perde) + ganha;
+		
+	if (estudante->pAtual.x == 0 && labirinto->espaco[x][y] != '2'){//nao importa pegar uma chave na ultima linha
+		if (labirinto->espaco[x][y] == '3'){ //verifica se a posicao e uma porta			
+    		if (qtdChave > 0){ //verifica se tem chave suficiente
+    			chave[x][y] = 1; 
+				estudante->pFinal.x = x;
+				estudante->pFinal.y = y;
+				analise->qtdMovimento++;
+				printf("Linha: %d Coluna: %d\n", estudante->pFinal.x, estudante->pFinal.y);
+				return 1;
+			}
+			return 0;
+		}
+		
+		estudante->pFinal.x = x;
+		estudante->pFinal.y = y;
+		analise->qtdMovimento++;
+		printf("Linha: %d Coluna: %d\n", estudante->pFinal.x, estudante->pFinal.y);
+		return 1;
+	}
+	 
+    //verifica se o estudante ira se movimentar para um espaco dentro do labirinto e que nao seja parede
+    if ((x >= 0) && (x < labirinto->linhas) && (y >= 0) && (y < labirinto->colunas) && (labirinto->espaco[x][y] != '2') && (caminho[x][y] == 0)){
+    	caminho[x][y] = 1; //informa que já passou pelo caminho	
+    	analise->qtdMovimento++;
+    	printf("Linha: %d Coluna: %d\n", x, y);
+    	
+    	if (labirinto->espaco[x][y] == '4'){ //verifica se a posicao tem uma chave
+			chave[x][y] = 2; //informa que recebeu uma chave
+			//tenta movimentar para cima	
+			if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x - 1, y, chave)){
+				return 1;
+			}
+			//tenta movimentar para direita
+			if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x, y + 1, chave)){		
+				return 1;
+			}
+			//tenta movimentar para esquerda
+			if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x, y - 1, chave)){
+				return 1;
+			}
+			//tenta movimentar para baixo
+			if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x + 1, y, chave)){
+				return 1;
+			}
+		}
+		
+		    	
+    	if (labirinto->espaco[x][y] == '3'){ //verifica se a posicao e uma porta
+    		if (qtdChave > 0){ //verifica se tem chave suficiente
+    			chave[x][y] = 1; //informa que usou uma chave
+    			//tenta movimentar para cima
+				if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x - 1, y, chave)){
+					return 1;
+				}
+				//tenta movimentar para direita
+				if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x, y + 1, chave)){		
+					return 1;
+				}
+				//tenta movimentar para esquerda
+				if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x, y - 1, chave)){
+					return 1;
+				}
+				//tenta movimentar para baixo
+				if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x + 1, y, chave)){
+					return 1;
+				}				
+				chave[x][y] = 0; //recebe 0 caso tenha que voltar pela porta
+			}
+			return 0;
+		}
+		
+		//tenta movimentar para cima
+		if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x - 1, y, chave)){
+			return 1;
+		}
+		//tenta movimentar para direita
+		if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x, y + 1, chave)){
+			return 1;
+		}
+		//tenta movimentar para esquerda
+		if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x, y - 1, chave)){
+			return 1;
+		}
+		//tenta movimentar para baixo
+		if (movimentaEstudanteExtra(estudante, labirinto, analise, caminho, x + 1, y, chave)){
+			return 1;
+		}			
+		return 0;
+	}	
+	
+	
+	if (analise->nivelMaximo < analise->maxAux){
+		analise->nivelMaximo = analise->maxAux;		
+	}
+	
+	analise->maxAux = 0;
+	return 0;	
 }

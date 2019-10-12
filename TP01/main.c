@@ -87,7 +87,7 @@ int main(){
 		            	case 2:
 		            		system("cls");
 		                    solucao = inicializacoes(&labirinto, &estudante, &analise, 2);
-		                    /*if (modoAnalise){//contabilizar as analises
+		                    if (modoAnalise){//contabilizar as analises
 						    	printf ("\nModo analise ativo\n\n"); 
 						    	if(solucao){// Verifica se o problema tem solucao
 									printf("O estudante se movimentou %d vezes e chegou na coluna %d da primeira linha\n", analise.qtdMovimento, estudante.pFinal.y, estudante.pFinal.x);
@@ -105,7 +105,7 @@ int main(){
 								}else{
 									printf("O estudante se movimentou %d vezes e percebeu que o labirinto nao tem saida\n", analise.qtdMovimento);
 								}
-							}*/
+							}
 		            	break;
 		            		system ("cls");
 		            	case 3:

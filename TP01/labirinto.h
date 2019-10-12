@@ -31,4 +31,3 @@ void imprimirCaminho(TipoLabirinto *labirinto, int caminho[labirinto->linhas][la
 int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int caminho[labirinto->linhas][labirinto->colunas], int x, int y, int chave[labirinto->linhas][labirinto->colunas]); //encontrar a posicao do estudante e depois chamar essa funcao uma unica vez
 int inicializacoes(TipoLabirinto *labirinto, TipoEstudante *estudante, TipoAnalise *analise, int opcao);
 int movimentaEstudanteExtra(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int caminho[labirinto->linhas][labirinto->colunas], int x, int y, int chave[labirinto->linhas][labirinto->colunas]); //encontrar a posicao do estudante e depois chamar essa funcao uma unica vez
-
