@@ -1,20 +1,23 @@
 #define modoAnalise 1//analisa a quantidade de chamadas recursivas e o nível maximo de recursao alcancada
 
+//coordenadas da posicao
 typedef struct Posicao{
     int x, y; //y é coluna e x é linha
 }TipoPosicao;
 
+//posicoes do estudante em alguns momentos
 typedef struct Estudante{
     TipoPosicao pInicial;
     TipoPosicao pAtual;
     TipoPosicao pFinal;
 }TipoEstudante;
 
+//dados do labirinto
 typedef struct Labirinto{
-    char **espaco;
-    int linhas; 
-    int colunas;
-	int chaves; 
+    char **espaco; //posicoes do labirinto
+    int linhas; //quantidade de linhas
+    int colunas; //quantidade de colunas
+	int chaves; //quantidade de chaves
 }TipoLabirinto;
 
 typedef struct Analise{
@@ -24,12 +27,12 @@ typedef struct Analise{
 	int maxAux;
 }TipoAnalise;
 
+//escopo das funcoes
 void alocaEspaco(TipoLabirinto *Labirinto);
 int lerArquivo(TipoLabirinto *labirinto, char *nomeArquivo);
-void imprimir(TipoLabirinto *labirinto);
-void imprimirCaminho(TipoLabirinto *labirinto, int caminho[labirinto->linhas][labirinto->colunas]);
-int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int caminho[labirinto->linhas][labirinto->colunas], int x, int y, int chave[labirinto->linhas][labirinto->colunas]); //encontrar a posicao do estudante e depois chamar essa funcao uma unica vez
+int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int caminho[labirinto->linhas][labirinto->colunas], int x, int y, int chave[labirinto->linhas][labirinto->colunas]);
 int inicializacoes(TipoLabirinto *labirinto, TipoEstudante *estudante, TipoAnalise *analise, int opcao);
-int movimentaEstudanteExtra(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int caminho[labirinto->linhas][labirinto->colunas], int x, int y, int chave[labirinto->linhas][labirinto->colunas]); 
+int movimentaEstudanteExtra(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int caminho[labirinto->linhas][labirinto->colunas], int x, int y, int chave[labirinto->linhas][labirinto->colunas]);
 int geraLabirinto(int linhas, int colunas, int qtdChaves, int qtdPortas, int qtdParedes);
-
+void imprimir(TipoLabirinto *labirinto);
+void imprimirMatriz(TipoLabirinto *labirinto, int matriz[labirinto->linhas][labirinto->colunas]);

@@ -39,7 +39,7 @@ int main(){
                 printf("Digite o nome do arquivo de texto (sem a extensao): ");
                 scanf("%s", nomeArquivo);
                 leuArquivo = lerArquivo(&labirinto, nomeArquivo);
-                if (leuArquivo){
+                if (leuArquivo){ //se o arquivo foi lido com sucesso
                 	system("cls");
                 	printf ("\nArquivo lido com sucesso!\n\n");
             	}
@@ -55,7 +55,8 @@ int main(){
                 printf(" Informe a quantidade de chaves inicial: ");
                 scanf("%d", &qtdChaves);
                 printf(" Informe a quantidade de portas desejada: ");
-                scanf("%d", &qtdPortas);                
+                scanf("%d", &qtdPortas);          
+				//garante que a quantidade de portas e paredes vai ser menor que o tamanho do labirinto      
             	while (tamanho < qtdPortas){
                 	printf ("\n A quantidade de portas precisa ser menor que o tamanho do labirinto. Entre com outro valor: ");
                 	scanf("%d", &qtdPortas);
@@ -82,7 +83,7 @@ int main(){
 	                	scanf("%d", &qtdParedes);
 					}	
 				}
-                if(geraLabirinto(linhas, colunas, qtdChaves, qtdPortas, qtdParedes))
+                if(geraLabirinto(linhas, colunas, qtdChaves, qtdPortas, qtdParedes)) //chama a funcao que gera o labirinto
                 	printf ("\nArquivo criado com sucesso. Nome do arquivo: Arquivo-Teste\n");
 	        break;
             case 3:            	
@@ -108,7 +109,7 @@ int main(){
 			        switch(opcao){
 			            case 1:
 			            	system("cls");
-		                    solucao = inicializacoes(&labirinto, &estudante, &analise, 1);
+		                    solucao = inicializacoes(&labirinto, &estudante, &analise, 1); //chama a funcao que movimenta o estudante sem poder pegar chaves
 		                    if (modoAnalise){//contabilizar as analises
 						    	printf ("\nModo analise ativo\n\n"); 
 						    	if(solucao){// Verifica se o problema tem solucao
@@ -131,7 +132,7 @@ int main(){
 		            	break;
 		            	case 2:
 		            		system("cls");
-		                    solucao = inicializacoes(&labirinto, &estudante, &analise, 2);
+		                    solucao = inicializacoes(&labirinto, &estudante, &analise, 2); //chama a funcao que movimenta o estudante podendo pegar chaves
 		                    if (modoAnalise){//contabilizar as analises
 						    	printf ("\nModo analise ativo\n\n"); 
 						    	if(solucao){// Verifica se o problema tem solucao
@@ -159,7 +160,7 @@ int main(){
 		                	exit(0);	
 						break;						
 			        }
-        		}else{
+        		}else{ //caso o usuario queira resultados sem carregar um arquivo antes
                     printf("\nCarregue antes um arquivo de dados\n");
             	}
 	        break;
