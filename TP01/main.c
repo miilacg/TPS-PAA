@@ -1,9 +1,9 @@
-//Universidade Federal de Viçosa - Campus Florestal
-//Curso de Ciência da Computação
+//Universidade Federal de ViÃ§osa - Campus Florestal
+//Curso de CiÃªncia da ComputaÃ§Ã£o
 //Disciplina de Projeto e Analise de Algoritmos
 //Professor Daniel Mendes
-//Alunos: Camila C. Guimarães - 2256 e Samuel Silva
-//Trabalho Prático 01
+//Alunos: Camila C. GuimarÃ£es - 2256 e Samuel Silva - 2662
+//Trabalho PrÃ¡tico 01
 
 #include "labirinto.c"
 #include <stdio.h>
