@@ -251,7 +251,6 @@ int movimentaEstudanteExtra(TipoEstudante *estudante, TipoLabirinto *labirinto, 
     if ((x >= 0) && (x < labirinto->linhas) && (y >= 0) && (y < labirinto->colunas) && (labirinto->espaco[x][y] != '2') && (caminho[x][y] == 0)){
     	caminho[x][y] = 1; //informa que já passou pelo caminho
     	analise->qtdMovimento++;
-    	imprimirMatriz(labirinto, chave);
     	printf("Linha: %d Coluna: %d\n", x, y);
 
     	if (labirinto->espaco[x][y] == '4'){ //verifica se a posicao tem uma chave
