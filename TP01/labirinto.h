@@ -1,4 +1,5 @@
-#define modoAnalise 1//analisa a quantidade de chamadas recursivas e o nível maximo de recursao alcancada
+//analisa a quantidade de chamadas recursivas e o nível maximo de recursao alcancada
+#define modoAnalise 1 //definir como 1 se deseja ter as informações do modoAnalise e 0 se não desejar
 
 //coordenadas da posicao
 typedef struct Posicao{
