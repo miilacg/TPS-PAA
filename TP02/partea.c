@@ -3,12 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
-//le o arquivo para saber o desenho do labirinto e posicao do estudante
-int lerArquivo(TipoPiramide *piramide, char *nomeArquivo){
-	int num, i, j, qtdLinhas;
+ 
+int lerArquivo(TipoPiramide *piramide, char *nomeArquivo){//le o arquivo
+	int num, i, j, qtdLinhas, aux = 0;
 	FILE *arquivo;
-    char caminhoArquivo[150], comparacao;
+    char caminhoArquivo[150], caracter;
     strcpy(caminhoArquivo, "C:\\Users\\Camila\\Desktop\\Camila\\Trabalho\\Superior\\PAA\\TPS-PAA\\TP02\\"); //caminho ate o arquivo
     strcat(caminhoArquivo, nomeArquivo); //nome do arquivo recebido pelo usuario
     strcat(caminhoArquivo, ".txt");
@@ -23,27 +22,27 @@ int lerArquivo(TipoPiramide *piramide, char *nomeArquivo){
     	while (!feof(arquivo)) { //enquanto nao for o fim do arquivo
             for (i = 0; i < qtdLinhas; i++) { //percorre o arquivo
                 for (j = 0; j <= i; j++) {
-                    fscanf(arquivo, "%c ", &num); //le o que tem na posicao
+                    fscanf(arquivo, "%c ", &caracter); //le o que tem na posicao
+                    num = caracter - '0'; //convertendo char em int
                     piramide->espaco[i][j] = num; //preenche o labirinto
                 }
             }
         }
-        //imprimir(piramide);
+        imprimir(piramide);
 	}
 	fclose(arquivo);
     return 1; //retorna 1 se a leitura for feita com sucesso
 }
 
-//aloca o espaco necessario para o labirinto de acordo com os tamanhos lidos no arquivo
-void alocaEspaco(TipoPiramide *piramide){
+void alocaEspaco(TipoPiramide *piramide){//aloca o espaco necessario para o labirinto de acordo com os tamanhos lidos no arquivo
 	int i;
-    piramide->espaco = (char **) malloc(piramide->qtdLinhas * sizeof(char *));
+    piramide->espaco = (int **) malloc(piramide->qtdLinhas * sizeof(int *));
     for (i = 0; i < piramide->qtdLinhas; i++) {
-        piramide->espaco[i] = (char *) malloc(piramide->qtdLinhas * sizeof(char));
+        piramide->espaco[i] = (int *) malloc(piramide->qtdLinhas * sizeof(int));
     }
 }
 
-int contaLinhas(TipoPiramide *piramide, char *nomeArquivo){
+int contaLinhas(TipoPiramide *piramide, char *nomeArquivo){//retorna a altura da piramide
 	int qtdLinhas = 1;
 	char comparacao;	
 	FILE *arq;
@@ -65,13 +64,48 @@ int contaLinhas(TipoPiramide *piramide, char *nomeArquivo){
     return qtdLinhas;
 }
 
+int geraPiramide(int num, int tamanho, int contador){//funcao extra para gerar piramides
+    int piramide[tamanho][tamanho], j, i, caracter;
+    FILE *arquivo; 
+    char caminhoArquivo[150], nomeArquivo[11]; 
+	    
+	sprintf(nomeArquivo, "piramide%d", num);		
+	strcpy(caminhoArquivo, "C:\\Users\\Camila\\Desktop\\Camila\\Trabalho\\Superior\\PAA\\TPS-PAA\\TP02\\"); //caminho ate o arquivo
+    strcat(caminhoArquivo, nomeArquivo); 
+    strcat(caminhoArquivo, ".txt");
+    arquivo = fopen(caminhoArquivo, "w+");
+    
+    //caminho e nome do arquivo que sera escrito
+    if (arquivo == NULL){
+        printf("\nErro\n");
+	}else{//se o arquivo for criado com sucesso
+		for (i = 0; i < tamanho; i++) {
+            for (j = 0; j <= i; j++) {
+            	caracter = rand()%10;
+                piramide[i][j] = caracter;
+            }
+        }
+        for (i = 0; i < tamanho; i++) { //escreve no arquivo o que esta na matriz
+            for (j = 0; j <= i; j++) {
+                fprintf(arquivo, "%d ", piramide[i][j]);
+            }
+            if (i<tamanho-1)
+            	fprintf(arquivo, "\n");
+        }
+		contador ++;
+	}
+    fclose(arquivo); //fecha o arquivo depois de escrever
+    return contador; // o contador e utilizado para contar quantas piramides foram criadas
+}
+
 //funcoes para testes
 void imprimir(TipoPiramide *piramide){//imprimi os valores lidos no arquivo
     int i, j;
     for (i = 0; i < piramide->qtdLinhas; i++) {
         for (j = 0; j <=i; j++) {
-            printf("\t%c ", piramide->espaco[i][j]);
+            printf("\t%d ", piramide->espaco[i][j]);
         }
         printf ("\n");
     }
 }
+

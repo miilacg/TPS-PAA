@@ -11,7 +11,7 @@
 int main(){
 	srand(time(NULL)); //usado para funcao rand gerar numeros diferentes em um pequeno tempo
 	
-	int op, leuArquivo, opcao, quantidade, opc, solucao;
+	int op, leuArquivo, opcao, quantidade, opc, solucao, i, tamanho, contador = 0;
 	char nomeArquivo[50];
 	TipoPiramide piramide;
 
@@ -124,10 +124,15 @@ int main(){
 		            	}
 	            	break;
 	            	case 2:
-			        	/*printf("\n Informe quantas piramides deseja criar: ");
+			        	printf("\nInforme quantas piramides deseja criar: ");
 		                scanf("%d", &quantidade);
-		                if(geraPiramides(linhas, colunas, qtdChaves, qtdPortas, qtdParedes)) //chama a funcao que gera a piramide
-		                	printf ("\nPiramides criadas com sucesso.\n"); */
+		                for (i = 0; i<quantidade; i++){
+		                	tamanho = rand()%10 + 1;
+		                	contador = geraPiramide(i, tamanho, contador);
+						}
+						if (contador == quantidade){
+							printf ("\nPiramides criadas com sucesso.\n");
+						}
 			        break;
 			        system ("cls");
 	            	case 3:
