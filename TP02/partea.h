@@ -5,6 +5,11 @@ typedef struct Piramide{
     int qtdLinhas;
 }TipoPiramide;
 
+typedef struct Caminho{
+    int linhas;
+    int colunas;
+}TipoCaminho;
+
 int lerArquivo(TipoPiramide *piramide, char *nomeArquivo);
 void alocaEspaco(TipoPiramide *piramide);
 int contaLinhas(TipoPiramide *piramide, char *nomeArquivo);

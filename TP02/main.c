@@ -51,12 +51,12 @@ int main(){
 		        }while (opcao < 0 || opcao > 4); //garante que a opcao de entrada sera valida
 			        
 		        switch(opcao){
-		            case 1:
+		            case 1: //carregar novo arquivo de dados
 		            	printf("Digite o nome do arquivo de texto (sem a extensao): ");
 		                scanf("%s", nomeArquivo);
 		                leuArquivo = lerArquivo(&piramide, nomeArquivo);
 		                if (leuArquivo){ //se o arquivo foi lido com sucesso
-		                	//system("cls");
+		                	system("cls");
 		                	printf ("\nArquivo lido com sucesso!\n\n");
 		                	
 		                	//menu para selecao das opcoes
@@ -78,7 +78,7 @@ int main(){
 					        }while (opc < 0 || opc > 5); //garante que a opcao de entrada sera valida
 					        
 					        switch(opc){
-					            case 1:
+					            case 1: //recursivo
 					            	/*system("cls");
 				                    solucao =  //chama a funcao que trata de forma recursiva
 				                    if (modoAnalise){//contabilizar as analises
@@ -90,7 +90,7 @@ int main(){
 										//imprimir o valor da soma e o caminho
 									}*/
 				            	break;
-				            	case 2:
+				            	case 2: //memoization
 				            		/*system("cls");
 				                    solucao =  //chama a funcao que trata de forma memoization
 				                    if (modoAnalise){//contabilizar as analises
@@ -102,7 +102,7 @@ int main(){
 										//imprimir o valor da soma e o caminho
 									}*/
 				            	break;
-				            	case 3:
+				            	case 3: //iterativa
 				            		/*system("cls");
 				                    solucao =  //chama a funcao que trata de forma iterativa
 				                    if (modoAnalise){//contabilizar as analises
@@ -115,15 +115,15 @@ int main(){
 									}*/
 				            	break;
 				            		system ("cls");
-				            	case 4:
+				            	case 4: //voltar
 				            	break;
-				                case 5:
+				                case 5: //sair
 				                	exit(0);	
 								break;						
 					        }
 		            	}
 	            	break;
-	            	case 2:
+	            	case 2: //criar arquivos de teste
 			        	printf("\nInforme quantas piramides deseja criar: ");
 		                scanf("%d", &quantidade);
 		                for (i = 0; i<quantidade; i++){
@@ -135,9 +135,9 @@ int main(){
 						}
 			        break;
 			        system ("cls");
-	            	case 3:
+	            	case 3: //voltar
 	            	break;
-	                case 4:
+	                case 4: //sair
 	                	exit(0);	
 					break;						
 		        }

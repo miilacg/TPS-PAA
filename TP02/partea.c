@@ -98,6 +98,101 @@ int geraPiramide(int num, int tamanho, int contador){//funcao extra para gerar p
     return contador; // o contador e utilizado para contar quantas piramides foram criadas
 }
 
+//tentativa de fazer a piramide recursiva
+/*void piramedeRecursiva(TipoPiramide *piramede, int y, int x){
+	//verifica se o estudante ira se movimentar para um espaco dentro do labirinto, que nao seja parede e que ainda nao tenha sido percorrido
+    if ((x >= 0) && (x < labirinto->linhas) && (y >= 0) && (y < labirinto->colunas) && (labirinto->espaco[x][y] != '2') && (caminho[x][y] == 0)){
+    	
+}
+
+//encontrar a posicao do estudante e movimenta ele atraves de chamadas recursivas
+int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int caminho[labirinto->linhas][labirinto->colunas], int x, int y, int chave[labirinto->linhas][labirinto->colunas]){
+	int i, j, cont = 0, qtdChave;
+	estudante->pAtual.x = x;
+	estudante->pAtual.y = y;
+
+    //se chegar na primeira linha do labirinto
+	if (estudante->pAtual.x == 0 && labirinto->espaco[x][y] != '2'){
+		if (labirinto->espaco[x][y] == '3'){ //verifica se a posicao e uma porta
+    		if (qtdChave > 0){ //verifica se tem chave suficiente
+    			chave[x][y] = 1;
+				estudante->pFinal.x = x;
+				estudante->pFinal.y = y;
+				analise->qtdMovimento++;
+				printf("Linha: %d Coluna: %d\n", estudante->pFinal.x, estudante->pFinal.y); //imprime a posicao final do estudante
+				return 1;
+			}
+			return 0;
+		}
+
+		estudante->pFinal.x = x;
+		estudante->pFinal.y = y;
+		analise->qtdMovimento++;
+		printf("Linha: %d Coluna: %d\n", estudante->pFinal.x, estudante->pFinal.y);
+		return 1;
+	}
+
+    //se ainda nao for a primeira linha do labirinto
+    //verifica se o estudante ira se movimentar para um espaco dentro do labirinto, que nao seja parede e que ainda nao tenha sido percorrido
+    if ((x >= 0) && (x < labirinto->linhas) && (y >= 0) && (y < labirinto->colunas) && (labirinto->espaco[x][y] != '2') && (caminho[x][y] == 0)){
+    	caminho[x][y] = 1; //informa que já passou pelo caminho
+    	analise->qtdMovimento++;
+    	printf("Linha: %d Coluna: %d\n", x, y);//imprime a posicao que o estudante passou
+
+    	if (labirinto->espaco[x][y] == '3'){ //verifica se a posicao e uma porta
+    		if (qtdChave > 0){ //verifica se tem chave suficiente
+    			chave[x][y] = 1; //informa que usou uma chave
+    			//tenta movimentar para cima
+				if (movimenta_estudante(estudante, labirinto, analise, caminho, x - 1, y, chave)){
+					return 1;
+				}
+				//tenta movimentar para direita
+				if (movimenta_estudante(estudante, labirinto, analise, caminho, x, y + 1, chave)){
+					return 1;
+				}
+				//tenta movimentar para esquerda
+				if (movimenta_estudante(estudante, labirinto, analise, caminho, x, y - 1, chave)){
+					return 1;
+				}
+				//tenta movimentar para baixo
+				if (movimenta_estudante(estudante, labirinto, analise, caminho, x + 1, y, chave)){
+					return 1;
+				}
+				chave[x][y] = 0; //recebe 0 caso tenha que voltar pela porta
+			}
+			return 0;
+		}
+
+		//tenta movimentar para cima
+		if (movimenta_estudante(estudante, labirinto, analise, caminho, x - 1, y, chave)){
+			return 1;
+		}
+		//tenta movimentar para direita
+		if (movimenta_estudante(estudante, labirinto, analise, caminho, x, y + 1, chave)){
+			return 1;
+		}
+		//tenta movimentar para esquerda
+		if (movimenta_estudante(estudante, labirinto, analise, caminho, x, y - 1, chave)){
+			return 1;
+		}
+		//tenta movimentar para baixo
+		if (movimenta_estudante(estudante, labirinto, analise, caminho, x + 1, y, chave)){
+			return 1;
+		}
+		return 0;
+	}
+
+
+	if (analise->nivelMaximo < analise->maxAux){
+        //garante que sera informado a maior quantidade de vezes
+        //que foi feita chamada recursiva sem ter que voltar
+		analise->nivelMaximo = analise->maxAux;
+	}
+
+	analise->maxAux = 0; //se precisar voltar a contagem e zerada
+	return 0;
+}*/
+
 //funcoes para testes
 void imprimir(TipoPiramide *piramide){//imprimi os valores lidos no arquivo
     int i, j;
