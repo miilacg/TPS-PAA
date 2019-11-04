@@ -5,15 +5,16 @@
 //Alunos: Camila C. Guimarães - 2256 e Samuel Silva - 2662
 //Trabalho Pratico 02
 
-#include "partea.c"
 #include <stdio.h>
+#include "partea.c"
 
 int main(){
 	srand(time(NULL)); //usado para funcao rand gerar numeros diferentes em um pequeno tempo
 	
-	int op, leuArquivo, opcao, quantidade, opc, i, tamanho, contador = 0;
+	int op, leuArquivo, opcao, quantidade, opc, i, tamanho, contador = 0, modoAnalise;
 	char nomeArquivo[50];
 	TipoPiramide piramide;
+	TipoAnalise analise;
 
 	do{
 		//menu para selecao das opcoes
@@ -80,7 +81,21 @@ int main(){
 					        switch(opc){
 					            case 1: //recursivo
 					            	system("cls");
-				                    solucao(&piramide, opc);
+					            	printf ("\n****************************************************************************************");
+								    printf ("\n*                                                                                      *");
+								    printf ("\n*                           Voce deseja ativar o modo debug?                           *");
+								    printf ("\n*                                      0 - Nao                                         *");
+								    printf ("\n*                                      1 - Sim                                         *");								    
+								    printf ("\n*                                                                                      *");
+								    printf ("\n****************************************************************************************");
+								    printf ("\n");
+							        do{
+							            printf ("Entre com a opcao valida: ");
+							            scanf ("%d", &modoAnalise);
+							        }while (modoAnalise < 0 || modoAnalise > 1); //garante que a opcao de entrada sera valida
+							        
+							        analise.memoria = 0;
+				                    solucao(&piramide, &analise, opc, modoAnalise);
 				                    /*if (modoAnalise){//contabilizar as analises
 								    	printf ("\nModo analise ativo\n\n"); 
 										//imprimir tempo de execucao e memoria utilizada
@@ -127,7 +142,7 @@ int main(){
 			        	printf("\nInforme quantas piramides deseja criar: ");
 		                scanf("%d", &quantidade);
 		                for (i = 0; i<quantidade; i++){
-		                	tamanho = rand()%100 + 1;
+		                	tamanho = rand()%100 + 30;
 		                	contador = geraPiramide(i, tamanho, contador);
 						}
 						if (contador == quantidade){
