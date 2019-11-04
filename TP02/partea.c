@@ -22,13 +22,12 @@ int lerArquivo(TipoPiramide *piramide, char *nomeArquivo){//le o arquivo
     	while (!feof(arquivo)) { //enquanto nao for o fim do arquivo
             for (i = 0; i < qtdLinhas; i++) { //percorre o arquivo
                 for (j = 0; j <= i; j++) {
-                    fscanf(arquivo, "%c ", &caracter); //le o que tem na posicao
-                    num = caracter - '0'; //convertendo char em int
+                    fscanf(arquivo, "%d ", &num); //le o que tem na posicao
+                    //num = caracter - '0'; //convertendo char em int
                     piramide->espaco[i][j] = num; //preenche o labirinto
                 }
             }
         }
-        imprimir(piramide);
 	}
 	fclose(arquivo);
     return 1; //retorna 1 se a leitura for feita com sucesso
@@ -98,60 +97,77 @@ int geraPiramide(int num, int tamanho, int contador){//funcao extra para gerar p
     return contador; // o contador e utilizado para contar quantas piramides foram criadas
 }
 
-int piramideRecursiva(TipoPiramide *piramide, TipoCaminho *caminho, int linha, int coluna){//piramide recursiva
-	int somaBaixo = 0, somaDireita = 0;	
+int piramideRecursiva(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], int linha, int coluna){//piramide recursiva
+	int baixo = 0, direita = 0;
 	
-	//se nao for a ultima linha da piramide
-	//verifica se vai somar se ainda estiver dentro do labirinto e se ainda nao tiver tentado aquela posicao
-	if ((linha >= 0) && (linha < piramide->qtdLinhas) && (coluna >= 0) && (coluna < piramide->qtdLinhas) && (caminho->caminhoPercorrido == 0)){
-		caminho->caminhoPercorrido[linha][coluna] = 1;
-		somaBaixo = (piramideRecursiva(piramide, caminho, linha, coluna+1) + piramide->espaco[linha][coluna-1]);
-		somaDireita = (piramideRecursiva(piramide, caminho, linha+1, coluna+1) + piramide->espaco[linha-1][coluna-1]);
-		if (somaBaixo<somaDireita){
-			return somaDireita;
-		}else{
-			return somaBaixo;
-		}
-	}    
+	if (linha == piramide->qtdLinhas - 1){
+		return piramide->espaco[linha][coluna];
+	}
 	
-	//se chegar na ultima linha da piramide
-	if ((caminho->linha == piramide->qtdLinhas - 1){
-		if(maxSoma > maxSomaAtual){
-			printf ("A maior soma é: %d\n", maxSoma);
-			return 1;
-		}
-		return 0;
-	}	
+	baixo = piramideRecursiva(piramide, caminho, linha + 1, coluna + 1);
+	direita = piramideRecursiva (piramide, caminho, linha + 1, coluna);
+	
+	if (baixo>=direita){
+		caminho[linha][coluna] = baixo + piramide->espaco[linha][coluna];
+		return (baixo + piramide->espaco[linha][coluna]); 
+	}else{
+		caminho[linha][coluna] = direita + piramide->espaco[linha][coluna];
+		return (direita + piramide->espaco[linha][coluna]);
+	}
 }
 
-//encontrar a posicao do estudante e movimenta ele atraves de chamadas recursivas
-int movimenta_estudante(TipoEstudante *estudante, TipoLabirinto *labirinto, TipoAnalise *analise, int caminho[labirinto->linhas][labirinto->colunas], int x, int y, int chave[labirinto->linhas][labirinto->colunas]){
-	int i, j, cont = 0, qtdChave;
-	estudante->pAtual.x = x;
-	estudante->pAtual.y = y;
+void solucao(TipoPiramide *piramide, int tipo){
+	int soma = 0, i, j;
+	int caminho[piramide->qtdLinhas][piramide->qtdLinhas];
+	
+	//inicializacao da matriz caminho
+	for (i = 0; i < piramide->qtdLinhas; i++){ 
+		for (j = 0; j <= i; j++) {
+            caminho[i][j] = 0;
+        }
+    }	
+    
+	soma = piramideRecursiva(piramide, caminho, 0, 0);
+	printf ("Maior soma possivel: %d\n", soma);
+	caminhoPercorrido (piramide, caminho);
+}
 
-    if ((x >= 0) && (x < labirinto->linhas) && (y >= 0) && (y < labirinto->colunas) && (labirinto->espaco[x][y] != '2') && (caminho[x][y] == 0)){
-
-		//tenta movimentar para cima
-		if (movimenta_estudante(estudante, labirinto, analise, caminho, x - 1, y, chave)){
-			return 1;
+void caminhoPercorrido (TipoPiramide *piramide, int caminho[piramide->qtdLinhas][piramide->qtdLinhas]){
+	int i, j, coluna = 0, caminhoPercorrido[piramide->qtdLinhas][piramide->qtdLinhas];
+	
+	caminho[0][0] = piramide->espaco[0][0];
+	for (j = 0; j < piramide->qtdLinhas; j++) { //inicializa a ultima linha do caminho percorrido
+        caminho[piramide->qtdLinhas - 1][j] = piramide->espaco [piramide->qtdLinhas - 1][j];
+    }
+	
+	//inicializacao da matriz que e utilizada para verificar o caminho percorrido
+	for (i = 0; i < piramide->qtdLinhas; i++){
+		for (j = 0; j <= i; j++) {
+            caminhoPercorrido[i][j] = 0;
+        }
+    }
+        
+    for (i = 0; i < piramide->qtdLinhas; i++){ //coloca 1 no celula que foi utilizada na soma
+    	caminhoPercorrido[0][0] = 1;				
+		if(caminho[i+1][coluna]>caminho[i+1][coluna+1]){
+			caminhoPercorrido[i+1][coluna] = 1;
+		}else{
+			caminhoPercorrido[i+1][coluna+1] = 1;
+			coluna++;
 		}
-		//tenta movimentar para direita
-		if (movimenta_estudante(estudante, labirinto, analise, caminho, x, y + 1, chave)){
-			return 1;
-		}
-		//tenta movimentar para esquerda
-		if (movimenta_estudante(estudante, labirinto, analise, caminho, x, y - 1, chave)){
-			return 1;
-		}
-		//tenta movimentar para baixo
-		if (movimenta_estudante(estudante, labirinto, analise, caminho, x + 1, y, chave)){
-			return 1;
-		}
-		return 0;
 	}
-
-	return 0;
+    
+	printf ("Caminho percorrido: "); //imprimi o caminho percorrido
+	for (i = 0; i < piramide->qtdLinhas; i++) {
+        for (j = 0; j <= i; j++){
+            if (caminhoPercorrido[i][j] == 1){
+				printf ("%d", piramide->espaco[i][j]);
+			}
+			if (caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
+				printf (" -> ");
+			}
+    	}
+    }	
 }
 
 //funcoes para testes

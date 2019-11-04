@@ -5,17 +5,13 @@ typedef struct Piramide{
     int qtdLinhas;
 }TipoPiramide;
 
-typedef struct Caminho{
-    int linha;
-    int coluna;
-    int **caminhoPercorrido; //matriz para controle do caminho percorrido
-}TipoCaminho;
-
 int lerArquivo(TipoPiramide *piramide, char *nomeArquivo);
 void alocaEspaco(TipoPiramide *piramide);
 int contaLinhas(TipoPiramide *piramide, char *nomeArquivo);
 int geraPiramide(int i, int tamanho, int contador);
-int piramideRecursiva(TipoPiramide *piramide, TipoCaminho *caminho, int y, int x, int maxSoma);
+int piramideRecursiva(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], int y, int x);
+void solucao(TipoPiramide *piramide, int tipo);
+void caminhoPercorrido(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][piramide->qtdLinhas]);
 
 //funcoes para testes
 void imprimir(TipoPiramide *piramide);

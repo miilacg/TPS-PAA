@@ -11,7 +11,7 @@
 int main(){
 	srand(time(NULL)); //usado para funcao rand gerar numeros diferentes em um pequeno tempo
 	
-	int op, leuArquivo, opcao, quantidade, opc, solucao, i, tamanho, contador = 0;
+	int op, leuArquivo, opcao, quantidade, opc, i, tamanho, contador = 0;
 	char nomeArquivo[50];
 	TipoPiramide piramide;
 
@@ -79,9 +79,9 @@ int main(){
 					        
 					        switch(opc){
 					            case 1: //recursivo
-					            	/*system("cls");
-				                    solucao =  //chama a funcao que trata de forma recursiva
-				                    if (modoAnalise){//contabilizar as analises
+					            	system("cls");
+				                    solucao(&piramide, opc);
+				                    /*if (modoAnalise){//contabilizar as analises
 								    	printf ("\nModo analise ativo\n\n"); 
 										//imprimir tempo de execucao e memoria utilizada
 										//imprimir o valor da soma e o caminho										
@@ -127,7 +127,7 @@ int main(){
 			        	printf("\nInforme quantas piramides deseja criar: ");
 		                scanf("%d", &quantidade);
 		                for (i = 0; i<quantidade; i++){
-		                	tamanho = rand()%10 + 1;
+		                	tamanho = rand()%100 + 1;
 		                	contador = geraPiramide(i, tamanho, contador);
 						}
 						if (contador == quantidade){
