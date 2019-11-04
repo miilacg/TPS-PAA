@@ -6,14 +6,16 @@ typedef struct Piramide{
 }TipoPiramide;
 
 typedef struct Caminho{
-    int linhas;
-    int colunas;
+    int linha;
+    int coluna;
+    int **caminhoPercorrido; //matriz para controle do caminho percorrido
 }TipoCaminho;
 
 int lerArquivo(TipoPiramide *piramide, char *nomeArquivo);
 void alocaEspaco(TipoPiramide *piramide);
 int contaLinhas(TipoPiramide *piramide, char *nomeArquivo);
 int geraPiramide(int i, int tamanho, int contador);
+int piramideRecursiva(TipoPiramide *piramide, TipoCaminho *caminho, int y, int x, int maxSoma);
 
 //funcoes para testes
 void imprimir(TipoPiramide *piramide);
