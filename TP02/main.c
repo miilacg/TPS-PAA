@@ -94,40 +94,41 @@ int main(){
 							            scanf ("%d", &modoAnalise);
 							        }while (modoAnalise < 0 || modoAnalise > 1); //garante que a opcao de entrada sera valida
 							        
-							        analise.memoria = 0;
 				                    solucao(&piramide, &analise, opc, modoAnalise);
-				                    /*if (modoAnalise){//contabilizar as analises
-								    	printf ("\nModo analise ativo\n\n"); 
-										//imprimir tempo de execucao e memoria utilizada
-										//imprimir o valor da soma e o caminho										
-									}else{
-										printf ("\nModo analise nao ativo\n\n");
-										//imprimir o valor da soma e o caminho
-									}*/
 				            	break;
 				            	case 2: //memoization
-				            		/*system("cls");
-				                    solucao =  //chama a funcao que trata de forma memoization
-				                    if (modoAnalise){//contabilizar as analises
-								    	printf ("\nModo analise ativo\n\n"); 
-										//imprimir tempo de execucao e memoria utilizada
-										//imprimir o valor da soma e o caminho										
-									}else{
-										printf ("\nModo analise nao ativo\n\n");
-										//imprimir o valor da soma e o caminho
-									}*/
+				            		system("cls");
+					            	printf ("\n****************************************************************************************");
+								    printf ("\n*                                                                                      *");
+								    printf ("\n*                           Voce deseja ativar o modo debug?                           *");
+								    printf ("\n*                                      0 - Nao                                         *");
+								    printf ("\n*                                      1 - Sim                                         *");								    
+								    printf ("\n*                                                                                      *");
+								    printf ("\n****************************************************************************************");
+								    printf ("\n");
+							        do{
+							            printf ("Entre com a opcao valida: ");
+							            scanf ("%d", &modoAnalise);
+							        }while (modoAnalise < 0 || modoAnalise > 1); //garante que a opcao de entrada sera valida
+							        
+				                    solucao(&piramide, &analise, opc, modoAnalise);
 				            	break;
 				            	case 3: //iterativa
-				            		/*system("cls");
-				                    solucao =  //chama a funcao que trata de forma iterativa
-				                    if (modoAnalise){//contabilizar as analises
-								    	printf ("\nModo analise ativo\n\n"); 
-										//imprimir tempo de execucao e memoria utilizada
-										//imprimir o valor da soma e o caminho										
-									}else{
-										printf ("\nModo analise nao ativo\n\n");
-										//imprimir o valor da soma e o caminho
-									}*/
+				            		system("cls");
+					            	printf ("\n****************************************************************************************");
+								    printf ("\n*                                                                                      *");
+								    printf ("\n*                           Voce deseja ativar o modo debug?                           *");
+								    printf ("\n*                                      0 - Nao                                         *");
+								    printf ("\n*                                      1 - Sim                                         *");								    
+								    printf ("\n*                                                                                      *");
+								    printf ("\n****************************************************************************************");
+								    printf ("\n");
+							        do{
+							            printf ("Entre com a opcao valida: ");
+							            scanf ("%d", &modoAnalise);
+							        }while (modoAnalise < 0 || modoAnalise > 1); //garante que a opcao de entrada sera valida
+							        
+				                    solucao(&piramide, &analise, opc, modoAnalise);
 				            	break;
 				            		system ("cls");
 				            	case 4: //voltar

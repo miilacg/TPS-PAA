@@ -17,9 +17,10 @@ int lerArquivo(TipoPiramide *piramide, char *nomeArquivo);
 void alocaEspaco(TipoPiramide *piramide);
 int contaLinhas(TipoPiramide *piramide, char *nomeArquivo);
 int geraPiramide(int i, int tamanho, int contador);
+int piramideRecursiva(TipoPiramide *piramide, TipoAnalise *analise, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], int linha, int coluna);
+int piramideIterativa(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][piramide->qtdLinhas]);
 
 //funcoes auxiliares
-int piramideRecursiva(TipoPiramide *piramide, TipoAnalise *analise, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], int y, int x);
 void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAnalise);
 void caminhoPercorrido(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], TipoAnalise *analise);
 void tempoInicial(clock_t *tempo);
