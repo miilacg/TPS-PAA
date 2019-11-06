@@ -66,7 +66,7 @@ int main(){
 						    printf ("\n*                     Escolha qual dos algoritmos deseja executar                      *");
 						    printf ("\n*                                 1 - Recursivo                                        *");
 						    printf ("\n*                                 2 - Memoization                                      *");
-						    printf ("\n*                                 3 - Iterativo                                        *");
+						    printf ("\n*                                 3 - De tras pra frente                               *");
 						    printf ("\n*                                 4 - Voltar                                           *");
 						    printf ("\n*                                 5 - Sair do programa                                 *");
 						    printf ("\n*                                                                                      *");
@@ -94,7 +94,7 @@ int main(){
 							            scanf ("%d", &modoAnalise);
 							        }while (modoAnalise < 0 || modoAnalise > 1); //garante que a opcao de entrada sera valida
 							        
-				                    solucao(&piramide, &analise, opc, modoAnalise);
+				                    solucao(&piramide, &analise, opc, modoAnalise, &nomeArquivo);
 				            	break;
 				            	case 2: //memoization
 				            		system("cls");
@@ -111,7 +111,7 @@ int main(){
 							            scanf ("%d", &modoAnalise);
 							        }while (modoAnalise < 0 || modoAnalise > 1); //garante que a opcao de entrada sera valida
 							        
-				                    solucao(&piramide, &analise, opc, modoAnalise);
+				                    solucao(&piramide, &analise, opc, modoAnalise, &nomeArquivo);
 				            	break;
 				            	case 3: //iterativa
 				            		system("cls");
@@ -128,7 +128,7 @@ int main(){
 							            scanf ("%d", &modoAnalise);
 							        }while (modoAnalise < 0 || modoAnalise > 1); //garante que a opcao de entrada sera valida
 							        
-				                    solucao(&piramide, &analise, opc, modoAnalise);
+				                    solucao(&piramide, &analise, opc, modoAnalise, &nomeArquivo);
 				            	break;
 				            		system ("cls");
 				            	case 4: //voltar
@@ -143,8 +143,8 @@ int main(){
 			        	printf("\nInforme quantas piramides deseja criar: ");
 		                scanf("%d", &quantidade);
 		                for (i = 0; i<quantidade; i++){
-		                	tamanho = rand()%100 + 30;
-		                	contador = geraPiramide(i, tamanho, contador);
+		                	tamanho = 1 + rand() % 99; //gera numeros aleatorios de 1 a 100
+		                	contador = geraPiramide(i, tamanho, contador); //conta quantas piramides foram criadas
 						}
 						if (contador == quantidade){
 							printf ("\nPiramides criadas com sucesso.\n");

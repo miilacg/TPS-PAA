@@ -9,7 +9,8 @@ typedef struct Piramide{
 
 typedef struct Analise{
 	double tempoTotal;
-	long int memoria;
+	long int memoriaSoma;
+	long int memoriaCaminho;
 	int qtdChamadaRecursiva;
 }TipoAnalise;
 
@@ -18,10 +19,11 @@ void alocaEspaco(TipoPiramide *piramide);
 int contaLinhas(TipoPiramide *piramide, char *nomeArquivo);
 int geraPiramide(int i, int tamanho, int contador);
 int piramideRecursiva(TipoPiramide *piramide, TipoAnalise *analise, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], int linha, int coluna);
+int piramideMemoization(TipoPiramide *piramide, TipoAnalise *analise, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], int linha, int coluna);
 int piramideIterativa(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][piramide->qtdLinhas]);
 
 //funcoes auxiliares
-void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAnalise);
+void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAnalise, char nomeArquivo);
 void caminhoPercorrido(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], TipoAnalise *analise);
 void tempoInicial(clock_t *tempo);
 double tempoFinalizado(clock_t tempo);

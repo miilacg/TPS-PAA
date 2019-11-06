@@ -32,7 +32,7 @@ int lerArquivo(TipoPiramide *piramide, char *nomeArquivo){//le o arquivo
     return 1; //retorna 1 se a leitura for feita com sucesso
 }
 
-void alocaEspaco(TipoPiramide *piramide){//aloca o espaco necessario para o labirinto de acordo com os tamanhos lidos no arquivo
+void alocaEspaco(TipoPiramide *piramide){//aloca o espaco necessario para a piramide
 	int i;
     piramide->espaco = (int **) malloc(piramide->qtdLinhas * sizeof(int *));
     for (i = 0; i < piramide->qtdLinhas; i++) {
@@ -98,25 +98,26 @@ int geraPiramide(int num, int tamanho, int contador){//funcao extra para gerar p
 
 int piramideRecursiva(TipoPiramide *piramide, TipoAnalise *analise, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], int linha, int coluna){//piramide recursiva
 	int baixo = 0, direita = 0;
-	
-	if (linha == piramide->qtdLinhas - 1){ //ultima linha
-		return piramide->espaco[linha][coluna];
-	}
-	
-	baixo = piramideRecursiva(piramide, analise, caminho, linha + 1, coluna + 1);
-	direita = piramideRecursiva (piramide, analise, caminho, linha + 1, coluna);
-	analise->qtdChamadaRecursiva = analise->qtdChamadaRecursiva + 2; //uma chamada para baixo e outra para direita
-	
-	if (baixo>=direita){
-		caminho[linha][coluna] = baixo + piramide->espaco[linha][coluna];
-		return (baixo + piramide->espaco[linha][coluna]); 
+		
+	if (linha < piramide->qtdLinhas - 1 && coluna <= linha){ //ultima linha
+		baixo = piramideRecursiva(piramide, analise, caminho, linha + 1, coluna + 1);
+		direita = piramideRecursiva (piramide, analise, caminho, linha + 1, coluna);
+		analise->qtdChamadaRecursiva = analise->qtdChamadaRecursiva + 2; //uma chamada para baixo e outra para direita
+		
+		if (baixo>=direita){
+			caminho[linha][coluna] = baixo + piramide->espaco[linha][coluna];
+			return (baixo + piramide->espaco[linha][coluna]); 
+		}else{
+			caminho[linha][coluna] = direita + piramide->espaco[linha][coluna];
+			return (direita + piramide->espaco[linha][coluna]);
+		}
 	}else{
-		caminho[linha][coluna] = direita + piramide->espaco[linha][coluna];
-		return (direita + piramide->espaco[linha][coluna]);
+		printf ("%d", coluna);
+		return (piramide->espaco[linha][coluna]);
 	}
 }
-
-int piramideMemoization(TipoPiramide *piramide, TipoAnalise *analise, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], int linha, int coluna){//piramide recursiva
+    
+int piramideMemoization(TipoPiramide *piramide, TipoAnalise *analise, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], int linha, int coluna){//piramide com memoization
 	int baixo = 0, direita = 0;
 	
     if(linha == piramide->qtdLinhas - 1){ //ultima linha
@@ -169,17 +170,18 @@ int piramideIterativa(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][p
 }
 
 //funcoes auxiliares
-void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAnalise){
-	int soma = 0, i, j;
+void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAnalise, char nomeArquivo){
+	int i, j, soma = 0;
 	int caminho[piramide->qtdLinhas][piramide->qtdLinhas];
 	clock_t tempo;
 	analise->tempoTotal = 0;
-	analise->memoria = 0;
+	analise->memoriaSoma = 0;
+	analise->memoriaCaminho = 0;
 	analise->qtdChamadaRecursiva = 0;
 	
 	//memoria utilizada na matriz usada para piramide
     for (i= 0; i < piramide->qtdLinhas; i++){
-    	analise->memoria = (piramide->qtdLinhas * sizeof(int)) + analise->memoria;	
+    	analise->memoriaSoma = (piramide->qtdLinhas * sizeof(int)) + analise->memoriaSoma;	
 	}
 	
 	//inicializacao da matriz caminho
@@ -189,49 +191,61 @@ void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAna
         }
     }	
     
-    //memoria utilizada na matriz caminho
-    for (i= 0; i < piramide->qtdLinhas; i++){
-    	analise->memoria = (piramide->qtdLinhas * sizeof(int)) + analise->memoria;	
-	}
-		
-	if (tipo == 1){//recursivo			    	    
+	if (tipo == 1){//recursivo	
+		//memoria utilizada na matriz caminho
+		//essa matriz e uma auxiliar para impressao da rota
+	    for (i= 0; i < piramide->qtdLinhas; i++){
+	    	analise->memoriaCaminho = (piramide->qtdLinhas * sizeof(int)) + analise->memoriaCaminho;	
+		}		    	    
 	    tempoInicial(&tempo);
 		soma = piramideRecursiva(piramide, analise, caminho, 0, 0);
-		analise->memoria = (analise->qtdChamadaRecursiva * sizeof(int)) + analise->memoria;
+		analise->memoriaSoma = (analise->qtdChamadaRecursiva * sizeof(int)) + analise->memoriaSoma; //memoria utilizada nas chamadas recursivas
 		analise->tempoTotal = tempoFinalizado(tempo);
 		if (modoAnalise == modoDebug){
-			printf ("\n*****************Modo analise ativo*****************\n\n"); 
-			printf ("Maior soma possivel: %d\n", soma);
+			printf ("\n*****************Modo analise ativo*****************\n\n");
+			printf ("Implementacao escolhida: Recursiva");
+			printf ("\nMaior soma possivel: %d\n", soma);
 			caminhoPercorrido(piramide, caminho, analise);
-			printf("\nTamanho da piramide %d", piramide->qtdLinhas);
-			printf("\nTempo total gasto para a solucao: %.10lf ms", analise->tempoTotal);
+			printf("\nTamanho da piramide: %d", piramide->qtdLinhas);
+			printf("\nTempo total gasto para encontrar a maior soma: %.10lf ms", analise->tempoTotal);
 			printf ("\nQuantidade de chamadas recursivas: %d", analise->qtdChamadaRecursiva);
-			printf ("\nQuantidade de memoria utilizada: %d", analise->memoria);
+			printf ("\nQuantidade de memoria utilizada para somar: %d", analise->memoriaSoma);
+			printf ("\nQuantidade de memoria utilizada para mostrar a rota: %d", analise->memoriaCaminho);
 			printf ("\n");
 		}else{
 			printf ("\n*******Modo analise desativado*******\n\n");
+			printf ("Implementacao escolhida: Recursiva");
 			printf ("Maior soma possivel: %d\n", soma);
 			caminhoPercorrido(piramide, caminho, analise);
 			printf ("\n");
 		}	
 	}
 	
-	if (tipo == 2){//Memoization			    	    
+	if (tipo == 2){//Memoization
+		//memoria utilizada na matriz caminho
+		//a matriz utilizada para calcular soma e imprimir rota
+	    for (i= 0; i < piramide->qtdLinhas; i++){
+	    	analise->memoriaSoma = (piramide->qtdLinhas * sizeof(int)) + analise->memoriaSoma;	
+		}	
+				    	    
 	    tempoInicial(&tempo);
 		soma = piramideMemoization(piramide, analise, caminho, 0, 0);
-		analise->memoria = (analise->qtdChamadaRecursiva * sizeof(int)) + analise->memoria;
+		analise->memoriaSoma = (analise->qtdChamadaRecursiva * sizeof(int)) + analise->memoriaSoma; //memoria utilizada nas chamadas recursivas
 		analise->tempoTotal = tempoFinalizado(tempo);
 		if (modoAnalise == modoDebug){
 			printf ("\n*****************Modo analise ativo*****************\n\n"); 
+			printf ("Implementacao escolhida: Memoization");
 			printf ("Maior soma possivel: %d\n", soma);
 			caminhoPercorrido(piramide, caminho, analise);
-			printf("\nTamanho da piramide %d", piramide->qtdLinhas);
-			printf("\nTempo total gasto para a solucao: %.10lf ms", analise->tempoTotal);
-			printf ("\nQuantidade de chamadas recursivas: %d", analise->qtdChamadaRecursiva);
-			printf ("\nQuantidade de memoria utilizada: %d", analise->memoria);
-			printf ("\n");
+			printf("\nTamanho da piramide: %d", piramide->qtdLinhas);
+			printf("\nTempo total gasto para encontrar a maior soma: %.10lf ms", analise->tempoTotal);
+			printf("\nQuantidade de chamadas recursivas: %d", analise->qtdChamadaRecursiva);
+			printf ("\nQuantidade de memoria utilizada para somar: %d", analise->memoriaSoma);
+			printf ("\nQuantidade de memoria utilizada para mostrar a rota: %d", analise->memoriaCaminho);
+			printf("\n");
 		}else{
 			printf ("\n*******Modo analise desativado*******\n\n");
+			printf ("Implementacao escolhida: Memoization");
 			printf ("Maior soma possivel: %d\n", soma);
 			caminhoPercorrido(piramide, caminho, analise);
 			printf ("\n");
@@ -239,19 +253,28 @@ void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAna
 	}
 	
 	if (tipo == 3){//iterativo
+		//memoria utilizada na matriz caminho
+		//a matriz utilizada para calcular soma e imprimir rota
+	    for (i= 0; i < piramide->qtdLinhas; i++){
+	    	analise->memoriaCaminho = (piramide->qtdLinhas * sizeof(int)) + analise->memoriaCaminho;	
+		}
+		
 		tempoInicial(&tempo);
 		soma = piramideIterativa(piramide, caminho);
 		analise->tempoTotal = tempoFinalizado(tempo);
 		if (modoAnalise == modoDebug){
 			printf ("\n*****************Modo analise ativo*****************\n\n"); 
+			printf ("Implementacao escolhida: De tras pra frente");
 			printf ("Maior soma possivel: %d\n", soma);
 			caminhoPercorrido(piramide, caminho, analise);
-			printf("\nTamanho da piramide %d", piramide->qtdLinhas);
-			printf("\nTempo total gasto para a solucao: %.10lf ms", analise->tempoTotal);
-			printf ("\nQuantidade de memoria utilizada: %d", analise->memoria);
+			printf("\nTamanho da piramide: %d", piramide->qtdLinhas);
+			printf("\nTempo total gasto para encontrar a maior soma: %.10lf ms", analise->tempoTotal);
+			printf ("\nQuantidade de memoria utilizada para somar: %d", analise->memoriaSoma);
+			printf ("\nQuantidade de memoria utilizada para mostrar a rota: %d", analise->memoriaCaminho);
 			printf ("\n");
 		}else{
 			printf ("\n*******Modo analise desativado*******\n\n");
+			printf ("Implementacao escolhida: De tras pra frente");
 			printf ("Maior soma possivel: %d\n", soma);
 			caminhoPercorrido(piramide, caminho, analise);
 			printf ("\n");
@@ -273,14 +296,14 @@ void caminhoPercorrido(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][
             caminhoPercorrido[i][j] = 0;
         }
     }
-    
+
     //memoria utilizada na matriz caminhoPercorrido
     for (i= 0; i < piramide->qtdLinhas; i++){
-    	analise->memoria = (piramide->qtdLinhas * sizeof(int)) + analise->memoria;	
+    	analise->memoriaCaminho = (piramide->qtdLinhas * sizeof(int)) + analise->memoriaCaminho;	
 	}
-        
-    for (i = 0; i < piramide->qtdLinhas; i++){ //coloca 1 no celula que foi utilizada na soma
-    	caminhoPercorrido[0][0] = 1;				
+     
+    for (i = 0; i < piramide->qtdLinhas - 1; i++){ //coloca 1 no celula que foi utilizada na soma
+    	caminhoPercorrido[0][0] = 1;
 		if(caminho[i+1][coluna]>caminho[i+1][coluna+1]){
 			caminhoPercorrido[i+1][coluna] = 1;
 		}else{
