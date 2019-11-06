@@ -1,0 +1,3 @@
+/home/caio/CLionProjects/ParteB/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/caio/CLionProjects/ParteB/cmake-build-debug/CMakeFiles/ParteB.dir
+/home/caio/CLionProjects/ParteB/cmake-build-debug/CMakeFiles/edit_cache.dir

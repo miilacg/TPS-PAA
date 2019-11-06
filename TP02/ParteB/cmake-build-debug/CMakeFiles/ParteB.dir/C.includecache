@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/caio/CLionProjects/ParteB/DistanciaEdicao.c
+DistanciaEdicao.h
+/home/caio/CLionProjects/ParteB/DistanciaEdicao.h
+stdlib.h
+-
+stdio.h
+-
+
+/home/caio/CLionProjects/ParteB/DistanciaEdicao.h
+
