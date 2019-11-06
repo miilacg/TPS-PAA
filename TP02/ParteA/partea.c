@@ -20,7 +20,7 @@ int piramideRecursiva(TipoPiramide *piramide, TipoAnalise *analise, int caminho[
 			return (direita + piramide->espaco[linha][coluna]);
 		}
 	}else{
-		printf ("%d", coluna);
+		//printf ("%d", coluna);
 		return (piramide->espaco[linha][coluna]);
 	}
 }
@@ -92,7 +92,7 @@ int lerArquivo(TipoPiramide *piramide, char *nomeArquivo){//le o arquivo
         printf("\nErro de leitura do arquivo\n");
         return 0; //retorna 0 caso nao seja possivel ler o arquivo
     }else{
-    	qtdLinhas = contaLinhas(piramide, nomeArquivo);printf ("oi");
+    	qtdLinhas = contaLinhas(piramide, nomeArquivo);
     	while (!feof(arquivo)) { //enquanto nao for o fim do arquivo
             for (i = 0; i < qtdLinhas; i++) { //percorre o arquivo
                 for (j = 0; j <= i; j++) {
@@ -324,6 +324,7 @@ void caminhoPercorrido(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][
 			}
     	}
     }
+    printf ("\n");
 }
 
 void tempoInicial(clock_t *tempo){
@@ -344,13 +345,13 @@ void teste(TipoPiramide *piramide, TipoAnalise *analise, int quantidade){//funca
 	char nomeArquivo[20];
 	
 	for (i = 0; i < quantidade; i++){ //vai rodar o numero de vezes que a pessoa desejar fazer o teste
-		tamanho = 1 + rand() % 20; //gera numeros aleatorios de 1 a 30
+		tamanho = 1 + rand() % 40; //gera numeros aleatorios de 1 a 30
 		contador = geraPiramide(i, tamanho, contador);
 		sprintf(nomeArquivo, "piramide%d", i);
 		lerArquivo(piramide, nomeArquivo);
 		
 		//usado para testar as 3 implementacoes
-		printf ("\n\n***************** Piramide de tamanho %d *****************\n\n", tamanho);
+		printf ("\n\n***************************************** Piramide de tamanho %d *****************************************\n\n", tamanho);
 		for (j = 1; j < 4; j++){ //j e o tipo
 			solucaoTeste (piramide, analise, j);
 		}	
@@ -397,8 +398,8 @@ void solucaoTeste(TipoPiramide *piramide, TipoAnalise *analise, int tipo){
 		printf ("\nResultado da soma: %d\n", soma);
 		caminhoPercorrido(piramide, caminho, analise);
 		                                                                                      
-	    printf ("  Implementacao        Tempo gasto    Quantidade de chamadas recursivas     Memoria total utilizada\n");                                                                                  
-		printf ("    Recursiva              %lf.5                       %d                                 %d", analise->tempoTotal, analise->qtdChamadaRecursiva, memoriaTotal);		
+	    printf (" \n   Implementacao         Tempo gasto       Quantidade de chamadas recursivas     Memoria total utilizada\n");                                                                                  
+		printf ("     Recursiva            %.5lf ms                       %d                               %d", analise->tempoTotal, analise->qtdChamadaRecursiva, memoriaTotal);		
 		printf ("\n");
 	}
 	
@@ -416,7 +417,7 @@ void solucaoTeste(TipoPiramide *piramide, TipoAnalise *analise, int tipo){
 
 		caminhoPercorridoTeste(piramide, caminho, analise);
 		
-		printf ("    Iterativa              %dlf.5                       %d                                 %d", analise->tempoTotal, analise->qtdChamadaRecursiva, memoriaTotal);		
+		printf ("     Iterativa            %.5lf ms                       %d                                %d", analise->tempoTotal, analise->qtdChamadaRecursiva, memoriaTotal);		
 		printf ("\n");	
 	}
 	
@@ -431,10 +432,9 @@ void solucaoTeste(TipoPiramide *piramide, TipoAnalise *analise, int tipo){
 		soma = piramideIterativa(piramide, caminho);
 		analise->tempoTotal = tempoFinalizado(tempo);
 			 
-		printf ("\nResultado da soma: %d\n", soma);
 		caminhoPercorridoTeste(piramide, caminho, analise);
                                                                   
-		printf ("De tras pra frente         %dlf.5                 ----------------                         %d\n\n", analise->tempoTotal, analise->qtdChamadaRecursiva, memoriaTotal);		
+		printf (" De tras pra frente       %.5lf ms                 ----------------                         %d\n\n", analise->tempoTotal, analise->qtdChamadaRecursiva, memoriaTotal);		
 		printf ("\n");
 		
 	}
