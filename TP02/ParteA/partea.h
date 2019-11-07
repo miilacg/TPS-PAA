@@ -11,8 +11,8 @@ typedef struct Piramide{
 typedef struct Analise{
 	double tempoSoma;
 	double tempoCaminho;
-	long int memoriaSoma;
-	long int memoriaCaminho;
+	double memoriaSoma;
+	double memoriaCaminho;
 	int qtdChamadaRecursiva;
 }TipoAnalise;
 
