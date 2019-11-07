@@ -34,4 +34,3 @@ double tempoFinalizado(clock_t tempo);
 //funcoes para teste automatico
 void teste(TipoPiramide *piramide, TipoAnalise *analise, int quantidade);
 void solucaoTeste(TipoPiramide *piramide, TipoAnalise *analise, int tipo);
-void caminhoPercorridoTeste(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], TipoAnalise *analise);

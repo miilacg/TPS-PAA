@@ -425,13 +425,13 @@ void teste(TipoPiramide *piramide, TipoAnalise *analise, int quantidade){//funca
 	//tipo - qual metodo a pessoa quer testar
 	int i, j, contador = 0, tamanho;
 	char nomeArquivo[20];
+	system("cls");
 	
 	for (i = 0; i < quantidade; i++){ //vai rodar o numero de vezes que a pessoa desejar fazer o teste
 		tamanho = 1 + rand() % 39; //gera numeros aleatorios de 1 a 30
 		contador = geraPiramide(i, tamanho, contador);
 		sprintf(nomeArquivo, "piramide%d", i);
 		lerArquivo(piramide, nomeArquivo);
-		system("cls");
 		
 		//usado para testar as 3 implementacoes
 		printf ("\n\n***************************************** Piramide de tamanho %d *****************************************\n\n", tamanho);
@@ -513,20 +513,8 @@ void solucaoTeste(TipoPiramide *piramide, TipoAnalise *analise, int tipo){
 		analise->memoriaSoma = (analise->qtdChamadaRecursiva * sizeof(int)) + analise->memoriaSoma; //memoria utilizada nas chamadas recursivas
 		
 		tempoInicial(&tempo);
-		caminhoPercorridoTeste(piramide, caminho, analise);
+		caminhoPercorrido(piramide, caminho, analise);
 		analise->tempoCaminho = tempoFinalizado(tempo);
-		for (i = 0; i < piramide->qtdLinhas; i++) {
-	        for (j = 0; j <= i; j++){
-	            if (piramide->caminhoPercorrido[i][j] == 1){
-					printf ("%d", piramide->espaco[i][j]);
-				}
-				if (piramide->caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
-					printf (" -> ");
-				}
-	    	}
-	    }
-	    printf ("\n");
-		
 		printf ("     Memoization            %.5lf ms                       %d                                %d", analise->tempoSoma + analise->tempoCaminho, analise->qtdChamadaRecursiva, memoriaTotal);		
 		printf ("\n");	
 	}
@@ -543,54 +531,10 @@ void solucaoTeste(TipoPiramide *piramide, TipoAnalise *analise, int tipo){
 		analise->tempoSoma = tempoFinalizado(tempo);
 			 
 		tempoInicial(&tempo);
-		caminhoPercorridoTeste(piramide, caminho, analise);
-		analise->tempoCaminho = tempoFinalizado(tempo);
-		for (i = 0; i < piramide->qtdLinhas; i++) {
-	        for (j = 0; j <= i; j++){
-	            if (piramide->caminhoPercorrido[i][j] == 1){
-					printf ("%d", piramide->espaco[i][j]);
-				}
-				if (piramide->caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
-					printf (" -> ");
-				}
-	    	}
-	    }
-	    printf ("\n");
-                                                                  
+		caminhoPercorrido(piramide, caminho, analise);
+		analise->tempoCaminho = tempoFinalizado(tempo);                                           
 		printf (" De tras pra frente       %.5lf ms                 ----------------                         %d\n\n", analise->tempoSoma + analise->tempoCaminho, analise->qtdChamadaRecursiva, memoriaTotal);		
 		printf ("\n");
 		
 	}
 }
-
-void caminhoPercorridoTeste(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], TipoAnalise *analise){
-	int i, j, coluna = 0, caminhoPercorrido[piramide->qtdLinhas][piramide->qtdLinhas];
-	
-	caminho[0][0] = piramide->espaco[0][0]; //inicializa a primeira linha do caminho
-	for (j = 0; j < piramide->qtdLinhas; j++) { //inicializa a ultima linha do caminho 
-        caminho[piramide->qtdLinhas - 1][j] = piramide->espaco [piramide->qtdLinhas - 1][j];
-    }
-	
-	//inicializacao da matriz que e utilizada para verificar o caminho percorrido
-	for (i = 0; i < piramide->qtdLinhas; i++){
-		for (j = 0; j <= i; j++) {
-            caminhoPercorrido[i][j] = 0;
-        }
-    }
-
-    //memoria utilizada na matriz caminhoPercorrido
-    for (i= 0; i < piramide->qtdLinhas; i++){
-    	analise->memoriaCaminho = (piramide->qtdLinhas * sizeof(int)) + analise->memoriaCaminho;	
-	}
-     
-    for (i = 0; i < piramide->qtdLinhas - 1; i++){ //coloca 1 no celula que foi utilizada na soma
-    	caminhoPercorrido[0][0] = 1;
-		if(caminho[i+1][coluna]>caminho[i+1][coluna+1]){
-			caminhoPercorrido[i+1][coluna] = 1;
-		}else{
-			caminhoPercorrido[i+1][coluna+1] = 1;
-			coluna++;
-		}
-	}
-}
-
