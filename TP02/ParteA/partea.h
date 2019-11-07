@@ -13,7 +13,7 @@ typedef struct Analise{
 	double tempoCaminho;
 	double memoriaSoma;
 	double memoriaCaminho;
-	int qtdChamadaRecursiva;
+	double qtdChamadaRecursiva;
 }TipoAnalise;
 
 //funcoes principais
