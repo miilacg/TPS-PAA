@@ -5,10 +5,12 @@
 typedef struct Piramide{
     int **espaco;
     int qtdLinhas;
+    int **caminhoPercorrido;
 }TipoPiramide;
 
 typedef struct Analise{
-	double tempoTotal;
+	double tempoSoma;
+	double tempoCaminho;
 	long int memoriaSoma;
 	long int memoriaCaminho;
 	int qtdChamadaRecursiva;

@@ -24,8 +24,7 @@ int main(){
 	    printf ("\n*                           1 - Carregar um arquivo de dados                           *");
 	    printf ("\n*                           2 - Criar piramides aleatorias                             *");
 	    printf ("\n*                           3 - Fazer testes automaticos                               *");
-	    printf ("\n*                           4 - Voltar                                                 *");
-	    printf ("\n*                           5 - Sair do programa                                       *");
+	    printf ("\n*                           4 - Sair do programa                                       *");
 	    printf ("\n*                                                                                      *");
 	    printf ("\n****************************************************************************************");
 	    printf ("\n");
@@ -169,13 +168,11 @@ int main(){
 				}			        	
 	        break;	
 	        system ("cls");	
-        	case 4: //voltar
-        	break;
-            case 5: //sair
+            case 4: //sair
             	exit(0);	
 			break;						
         }
-	}while(opcao!=5);   
+	}while(opcao!=4);   
 	 
     return 0;
 }

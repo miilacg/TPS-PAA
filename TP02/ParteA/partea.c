@@ -106,11 +106,19 @@ int lerArquivo(TipoPiramide *piramide, char *nomeArquivo){//le o arquivo
     return 1; //retorna 1 se a leitura for feita com sucesso
 }
 
-void alocaEspaco(TipoPiramide *piramide){//aloca o espaco necessario para a piramide
+void alocaEspaco(TipoPiramide *piramide){//aloca o espaco necessario para a piramide e para matriz caminhoPercorrido
 	int i;
+	
+	//alocando espaco para piramide
     piramide->espaco = (int **) malloc(piramide->qtdLinhas * sizeof(int *));
     for (i = 0; i < piramide->qtdLinhas; i++) {
         piramide->espaco[i] = (int *) malloc(piramide->qtdLinhas * sizeof(int));
+    }
+    
+    //alocando espaco para a matriz caminho percorrido
+	piramide->caminhoPercorrido = (int **) malloc(piramide->qtdLinhas * sizeof(int *));
+    for (i = 0; i < piramide->qtdLinhas; i++) {
+        piramide->caminhoPercorrido[i] = (int *) malloc(piramide->qtdLinhas * sizeof(int));
     }
 }
 
@@ -175,7 +183,8 @@ void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAna
 	int caminho[piramide->qtdLinhas][piramide->qtdLinhas];
 	clock_t tempo;
 	//inicializacao das variaveis de analise
-	analise->tempoTotal = 0;
+	analise->tempoSoma = 0;
+	analise->tempoCaminho = 0;
 	analise->memoriaSoma = 0;
 	analise->memoriaCaminho = 0;
 	analise->qtdChamadaRecursiva = 0;
@@ -200,15 +209,31 @@ void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAna
 		}		    	    
 	    tempoInicial(&tempo);
 		soma = piramideRecursiva(piramide, analise, caminho, 0, 0);
+		analise->tempoSoma = tempoFinalizado(tempo);
 		analise->memoriaSoma = (analise->qtdChamadaRecursiva * sizeof(int)) + analise->memoriaSoma; //memoria utilizada nas chamadas recursivas
-		analise->tempoTotal = tempoFinalizado(tempo);
 		if (modoAnalise == modoDebug){
 			printf ("\n*****************Modo analise ativo*****************\n\n");
 			printf ("Implementacao escolhida: Recursiva");
 			printf ("\nMaior soma possivel: %d\n", soma);
+			tempoInicial(&tempo);
 			caminhoPercorrido(piramide, caminho, analise);
+			analise->tempoCaminho = tempoFinalizado(tempo);
+			printf ("Caminho percorrido: "); //imprimi o caminho percorrido
+			for (i = 0; i < piramide->qtdLinhas; i++) {
+		        for (j = 0; j <= i; j++){
+		            if (piramide->caminhoPercorrido[i][j] == 1){
+						printf ("%d", piramide->espaco[i][j]);
+					}
+					if (piramide->caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
+						printf (" -> ");
+					}
+		    	}
+		    }
+		    printf ("\n");
 			printf("\nTamanho da piramide: %d", piramide->qtdLinhas);
-			printf("\nTempo total gasto para encontrar a maior soma: %.5lf ms", analise->tempoTotal);
+			printf("\nTempo utilizado para encontrar a maior soma: %.5lf ms", analise->tempoSoma);
+			printf("\nTempo utilizado para informar a rota: %.5lf ms", analise->tempoCaminho);
+			printf("\nTempo total utilizado: %.5lf ms", analise->tempoSoma + analise->tempoCaminho);
 			printf ("\nQuantidade de chamadas recursivas: %d", analise->qtdChamadaRecursiva);
 			printf ("\nQuantidade de memoria utilizada para somar: %d", analise->memoriaSoma);
 			printf ("\nQuantidade de memoria utilizada para mostrar a rota: %d", analise->memoriaCaminho);
@@ -219,6 +244,18 @@ void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAna
 			printf ("Implementacao escolhida: Recursiva");
 			printf ("Maior soma possivel: %d\n", soma);
 			caminhoPercorrido(piramide, caminho, analise);
+			printf ("Caminho percorrido: "); //imprimi o caminho percorrido
+			for (i = 0; i < piramide->qtdLinhas; i++) {
+		        for (j = 0; j <= i; j++){
+		            if (piramide->caminhoPercorrido[i][j] == 1){
+						printf ("%d", piramide->espaco[i][j]);
+					}
+					if (piramide->caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
+						printf (" -> ");
+					}
+		    	}
+		    }
+		    printf ("\n");
 			printf ("\n");
 		}	
 	}
@@ -232,15 +269,32 @@ void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAna
 				    	    
 	    tempoInicial(&tempo);
 		soma = piramideMemoization(piramide, analise, caminho, 0, 0);
+		analise->tempoSoma = tempoFinalizado(tempo);
 		analise->memoriaSoma = (analise->qtdChamadaRecursiva * sizeof(int)) + analise->memoriaSoma; //memoria utilizada nas chamadas recursivas
-		analise->tempoTotal = tempoFinalizado(tempo);
 		if (modoAnalise == modoDebug){
 			printf ("\n*****************Modo analise ativo*****************\n\n"); 
 			printf ("Implementacao escolhida: Memoization");
 			printf ("\nMaior soma possivel: %d\n", soma);
+			tempoInicial(&tempo);
 			caminhoPercorrido(piramide, caminho, analise);
+			analise->tempoCaminho = tempoFinalizado(tempo);
+			printf ("Caminho percorrido: "); //imprimi o caminho percorrido
+			for (i = 0; i < piramide->qtdLinhas; i++) {
+		        for (j = 0; j <= i; j++){
+		            if (piramide->caminhoPercorrido[i][j] == 1){
+						printf ("%d", piramide->espaco[i][j]);
+					}
+					if (piramide->caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
+						printf (" -> ");
+					}
+		    	}
+		    }
+		    printf ("\n");
+		    printf ("\n");
 			printf("\nTamanho da piramide: %d", piramide->qtdLinhas);
-			printf("\nTempo total gasto para encontrar a maior soma: %.5lf ms", analise->tempoTotal);
+			printf("\nTempo utilizado para encontrar a maior soma: %.5lf ms", analise->tempoSoma);
+			printf("\nTempo utilizado para informar a rota: %.5lf ms", analise->tempoCaminho);
+			printf("\nTempo total utilizado: %.5lf ms", analise->tempoSoma + analise->tempoCaminho);
 			printf("\nQuantidade de chamadas recursivas: %d", analise->qtdChamadaRecursiva);
 			printf ("\nQuantidade de memoria utilizada para somar: %d", analise->memoriaSoma);
 			printf ("\nQuantidade de memoria utilizada para mostrar a rota: %d", analise->memoriaCaminho);
@@ -250,7 +304,19 @@ void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAna
 			printf ("\n*******Modo analise desativado*******\n\n");
 			printf ("Implementacao escolhida: Memoization");
 			printf ("Maior soma possivel: %d\n", soma);
+			printf ("Caminho percorrido: "); //imprimi o caminho percorrido
 			caminhoPercorrido(piramide, caminho, analise);
+			for (i = 0; i < piramide->qtdLinhas; i++) {
+		        for (j = 0; j <= i; j++){
+		            if (piramide->caminhoPercorrido[i][j] == 1){
+						printf ("%d", piramide->espaco[i][j]);
+					}
+					if (piramide->caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
+						printf (" -> ");
+					}
+		    	}
+		    }
+		    printf ("\n");
 			printf ("\n");
 		}	
 	}
@@ -264,14 +330,29 @@ void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAna
 		
 		tempoInicial(&tempo);
 		soma = piramideIterativa(piramide, caminho);
-		analise->tempoTotal = tempoFinalizado(tempo);
+		analise->tempoSoma = tempoFinalizado(tempo);
 		if (modoAnalise == modoDebug){
 			printf ("\n*****************Modo analise ativo*****************\n\n"); 
 			printf ("Implementacao escolhida: De tras pra frente");
 			printf ("\nMaior soma possivel: %d\n", soma);
+			tempoInicial(&tempo);
 			caminhoPercorrido(piramide, caminho, analise);
+			analise->tempoCaminho = tempoFinalizado(tempo);
+			for (i = 0; i < piramide->qtdLinhas; i++) {
+		        for (j = 0; j <= i; j++){
+		            if (piramide->caminhoPercorrido[i][j] == 1){
+						printf ("%d", piramide->espaco[i][j]);
+					}
+					if (piramide->caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
+						printf (" -> ");
+					}
+		    	}
+		    }
+		    printf ("\n");
 			printf("\nTamanho da piramide: %d", piramide->qtdLinhas);
-			printf("\nTempo total gasto para encontrar a maior soma: %.5lf ms", analise->tempoTotal);
+			printf("\nTempo utilizado para encontrar a maior soma: %.5lf ms", analise->tempoSoma);
+			printf("\nTempo utilizado para informar a rota: %.5lf ms", analise->tempoCaminho);
+			printf("\nTempo total utilizado: %.5lf ms", analise->tempoSoma + analise->tempoCaminho);
 			printf ("\nQuantidade de memoria utilizada para somar: %d", analise->memoriaSoma);
 			printf ("\nQuantidade de memoria utilizada para mostrar a rota: %d", analise->memoriaCaminho);
 			printf ("\nQuantidade de memoria total utilizada: %d", analise->memoriaCaminho + analise->memoriaSoma);
@@ -281,13 +362,24 @@ void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAna
 			printf ("Implementacao escolhida: De tras pra frente");
 			printf ("Maior soma possivel: %d\n", soma);
 			caminhoPercorrido(piramide, caminho, analise);
+			for (i = 0; i < piramide->qtdLinhas; i++) {
+		        for (j = 0; j <= i; j++){
+		            if (piramide->caminhoPercorrido[i][j] == 1){
+						printf ("%d", piramide->espaco[i][j]);
+					}
+					if (piramide->caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
+						printf (" -> ");
+					}
+		    	}
+		    }
+		    printf ("\n");
 			printf ("\n");
 		}	
 	}
 }
 
 void caminhoPercorrido(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][piramide->qtdLinhas], TipoAnalise *analise){
-	int i, j, coluna = 0, caminhoPercorrido[piramide->qtdLinhas][piramide->qtdLinhas];
+	int i, j, coluna = 0;
 	
 	caminho[0][0] = piramide->espaco[0][0]; //inicializa a primeira linha do caminho
 	for (j = 0; j < piramide->qtdLinhas; j++) { //inicializa a ultima linha do caminho 
@@ -297,7 +389,7 @@ void caminhoPercorrido(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][
 	//inicializacao da matriz que e utilizada para verificar o caminho percorrido
 	for (i = 0; i < piramide->qtdLinhas; i++){
 		for (j = 0; j <= i; j++) {
-            caminhoPercorrido[i][j] = 0;
+            piramide->caminhoPercorrido[i][j] = 0;
         }
     }
 
@@ -307,27 +399,14 @@ void caminhoPercorrido(TipoPiramide *piramide, int caminho[piramide->qtdLinhas][
 	}
      
     for (i = 0; i < piramide->qtdLinhas - 1; i++){ //coloca 1 no celula que foi utilizada na soma
-    	caminhoPercorrido[0][0] = 1;
+    	piramide->caminhoPercorrido[0][0] = 1;
 		if(caminho[i+1][coluna]>caminho[i+1][coluna+1]){
-			caminhoPercorrido[i+1][coluna] = 1;
+			piramide->caminhoPercorrido[i+1][coluna] = 1;
 		}else{
-			caminhoPercorrido[i+1][coluna+1] = 1;
+			piramide->caminhoPercorrido[i+1][coluna+1] = 1;
 			coluna++;
 		}
 	}
-    
-	printf ("Caminho percorrido: "); //imprimi o caminho percorrido
-	for (i = 0; i < piramide->qtdLinhas; i++) {
-        for (j = 0; j <= i; j++){
-            if (caminhoPercorrido[i][j] == 1){
-				printf ("%d", piramide->espaco[i][j]);
-			}
-			if (caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
-				printf (" -> ");
-			}
-    	}
-    }
-    printf ("\n");
 }
 
 void tempoInicial(clock_t *tempo){
@@ -348,7 +427,7 @@ void teste(TipoPiramide *piramide, TipoAnalise *analise, int quantidade){//funca
 	char nomeArquivo[20];
 	
 	for (i = 0; i < quantidade; i++){ //vai rodar o numero de vezes que a pessoa desejar fazer o teste
-		tamanho = 1 + rand() % 40; //gera numeros aleatorios de 1 a 30
+		tamanho = 1 + rand() % 39; //gera numeros aleatorios de 1 a 30
 		contador = geraPiramide(i, tamanho, contador);
 		sprintf(nomeArquivo, "piramide%d", i);
 		lerArquivo(piramide, nomeArquivo);
@@ -365,12 +444,13 @@ void teste(TipoPiramide *piramide, TipoAnalise *analise, int quantidade){//funca
 }
 
 void solucaoTeste(TipoPiramide *piramide, TipoAnalise *analise, int tipo){
-	int i, j, soma = 0, memoriaTotal = 0;
+	int i, j, soma = 0, memoriaTotal = 0, tempoTotal;
 	clock_t tempo;
 	int caminho[piramide->qtdLinhas][piramide->qtdLinhas];
 	
 	//inicializacao das variaveis de analise
-	analise->tempoTotal = 0;
+	analise->tempoSoma = 0;
+	analise->tempoCaminho = 0;
 	analise->memoriaSoma = 0;
 	analise->memoriaCaminho = 0;
 	analise->qtdChamadaRecursiva = 0;
@@ -395,15 +475,28 @@ void solucaoTeste(TipoPiramide *piramide, TipoAnalise *analise, int tipo){
 		}		    	    
 	    tempoInicial(&tempo);
 		soma = piramideRecursiva(piramide, analise, caminho, 0, 0); 
-		analise->memoriaSoma = (analise->qtdChamadaRecursiva * sizeof(int)) + analise->memoriaSoma; //memoria utilizada nas chamadas recursivas
-		analise->tempoTotal = tempoFinalizado(tempo); 
+		analise->tempoSoma = tempoFinalizado(tempo);
+		analise->memoriaSoma = (analise->qtdChamadaRecursiva * sizeof(int)) + analise->memoriaSoma; //memoria utilizada nas chamadas recursivas 
 		memoriaTotal = analise->memoriaCaminho + analise->memoriaSoma;
 		
 		printf ("\nResultado da soma: %d\n", soma);
+		tempoInicial(&tempo);
 		caminhoPercorrido(piramide, caminho, analise);
+		analise->tempoCaminho = tempoFinalizado(tempo);
+		for (i = 0; i < piramide->qtdLinhas; i++) {
+	        for (j = 0; j <= i; j++){
+	            if (piramide->caminhoPercorrido[i][j] == 1){
+					printf ("%d", piramide->espaco[i][j]);
+				}
+				if (piramide->caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
+					printf (" -> ");
+				}
+	    	}
+	    }
+	    printf ("\n");
 		                                                                                      
 	    printf (" \n   Implementacao         Tempo gasto       Quantidade de chamadas recursivas     Memoria total utilizada\n");                                                                                  
-		printf ("     Recursiva            %.5lf ms                       %d                               %d", analise->tempoTotal, analise->qtdChamadaRecursiva, memoriaTotal);		
+		printf ("     Recursiva            %.5lf ms                       %d                               %d", analise->tempoSoma + analise->tempoCaminho, analise->qtdChamadaRecursiva, memoriaTotal);		
 		printf ("\n");
 	}
 	
@@ -416,12 +509,25 @@ void solucaoTeste(TipoPiramide *piramide, TipoAnalise *analise, int tipo){
 				    	    
 	    tempoInicial(&tempo);
 		soma = piramideMemoization(piramide, analise, caminho, 0, 0);
+		analise->tempoSoma = tempoFinalizado(tempo);
 		analise->memoriaSoma = (analise->qtdChamadaRecursiva * sizeof(int)) + analise->memoriaSoma; //memoria utilizada nas chamadas recursivas
-		analise->tempoTotal = tempoFinalizado(tempo);
-
-		caminhoPercorridoTeste(piramide, caminho, analise);
 		
-		printf ("     Memoization            %.5lf ms                       %d                                %d", analise->tempoTotal, analise->qtdChamadaRecursiva, memoriaTotal);		
+		tempoInicial(&tempo);
+		caminhoPercorridoTeste(piramide, caminho, analise);
+		analise->tempoCaminho = tempoFinalizado(tempo);
+		for (i = 0; i < piramide->qtdLinhas; i++) {
+	        for (j = 0; j <= i; j++){
+	            if (piramide->caminhoPercorrido[i][j] == 1){
+					printf ("%d", piramide->espaco[i][j]);
+				}
+				if (piramide->caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
+					printf (" -> ");
+				}
+	    	}
+	    }
+	    printf ("\n");
+		
+		printf ("     Memoization            %.5lf ms                       %d                                %d", analise->tempoSoma + analise->tempoCaminho, analise->qtdChamadaRecursiva, memoriaTotal);		
 		printf ("\n");	
 	}
 	
@@ -434,11 +540,24 @@ void solucaoTeste(TipoPiramide *piramide, TipoAnalise *analise, int tipo){
 		
 		tempoInicial(&tempo);
 		soma = piramideIterativa(piramide, caminho);
-		analise->tempoTotal = tempoFinalizado(tempo);
+		analise->tempoSoma = tempoFinalizado(tempo);
 			 
+		tempoInicial(&tempo);
 		caminhoPercorridoTeste(piramide, caminho, analise);
+		analise->tempoCaminho = tempoFinalizado(tempo);
+		for (i = 0; i < piramide->qtdLinhas; i++) {
+	        for (j = 0; j <= i; j++){
+	            if (piramide->caminhoPercorrido[i][j] == 1){
+					printf ("%d", piramide->espaco[i][j]);
+				}
+				if (piramide->caminhoPercorrido[i][j] == 1 && i < piramide->qtdLinhas - 1){//nao deixa imprimir -> depois que nao tiver mais numeros
+					printf (" -> ");
+				}
+	    	}
+	    }
+	    printf ("\n");
                                                                   
-		printf (" De tras pra frente       %.5lf ms                 ----------------                         %d\n\n", analise->tempoTotal, analise->qtdChamadaRecursiva, memoriaTotal);		
+		printf (" De tras pra frente       %.5lf ms                 ----------------                         %d\n\n", analise->tempoSoma + analise->tempoCaminho, analise->qtdChamadaRecursiva, memoriaTotal);		
 		printf ("\n");
 		
 	}
