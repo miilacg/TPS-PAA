@@ -11,6 +11,7 @@ typedef struct {
     int **Operacoes;
 }MatrizDistancia;
 
+void distancia(char *FirstWord, char *SecondWord, int m, int n, MatrizDistancia *p);
 void distanciaIterativo(char *FirstWord, char *SecondWord, int m, int n, MatrizDistancia *p);
 void InicializaMatrizDistancia(MatrizDistancia *mD, int SizeFirstWord, int SizeSecondWord);
 int Minimo(int Deletar, int Inserir, int Substituir);

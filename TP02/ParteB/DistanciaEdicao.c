@@ -39,6 +39,40 @@ int Minimo(int Deletar, int Inserir, int Substituir) {
     }
 }
 
+void distancia(char *FirstWord, char *SecondWord, int m, int n, MatrizDistancia *p) {
+    int i = 0, j = 0;
+
+    for(i = 0; i < m; i++) {
+        p->Numero[i][0] = i;
+        //printf("%d", p->Numero[i][0]);
+    }
+    printf("\n");
+    for(i = 0; i < n; i++) {
+        p->Numero[0][i] = i;
+        //printf("%d", p->Numero[0][i]);
+    }
+    printf("\n");
+    for(i = 1; i < m; i++) {
+        for(j = 1; j < n; j++) {
+            if(FirstWord[i-1] == SecondWord[j-1]) {
+                p->Custo[i][j] = 0;
+            }else {
+                p->Custo[i][j] = 1;
+            }
+            p->Numero[i][j] = Minimo((p->Numero[i-1][j] + 1),(p->Numero[i][j-1] + 1),(p->Numero[i-1][j-1] + p->Custo[i][j]));
+            if(aux == 2) {
+                p->Operacoes[i][j] = aux;
+            }
+            if(aux == 3) {
+                p->Operacoes[i][j] = aux;
+            }
+            if(aux == 4) {
+                p->Operacoes[i][j] = aux;
+            }
+        }
+    }
+}
+
 void distanciaIterativo(char *FirstWord, char *SecondWord, int m, int n, MatrizDistancia *p) {
     int i = 0, j = 0;
 

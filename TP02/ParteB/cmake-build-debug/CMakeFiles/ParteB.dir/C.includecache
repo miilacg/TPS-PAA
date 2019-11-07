@@ -6,13 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/caio/CLionProjects/ParteB/DistanciaEdicao.c
-DistanciaEdicao.h
 /home/caio/CLionProjects/ParteB/DistanciaEdicao.h
-stdlib.h
--
+
+/home/caio/CLionProjects/ParteB/main.c
 stdio.h
 -
-
+stdlib.h
+-
+string.h
+-
+time.h
+-
+DistanciaEdicao.h
 /home/caio/CLionProjects/ParteB/DistanciaEdicao.h
 
