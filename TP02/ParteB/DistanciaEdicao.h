@@ -6,17 +6,16 @@
 #define PARTEB_DISTANCIAEDICAO_H
 
 typedef struct {
-    int OperacaoApagar;
-    int OperacaoIntroduzir;
-    int OperacaoSubstituir;
-    int OperacaoManter;
-    int ResultadoRecursao;
-}ContabilizaOperacoes;
+    int **Numero;
+    int **Custo;
+    int **Operacoes;
+}MatrizDistancia;
 
-void InicializaOperacoes(ContabilizaOperacoes *Op);
-int Minimo(int x, int y, int z);
-int distanciaEdicao(char *FirstWord, char *SecondWord, int m, int n, int aux, ContabilizaOperacoes *Op);
-void ImprimeQtdOperacoes(ContabilizaOperacoes Op);
-void printa();
+void distanciaIterativo(char *FirstWord, char *SecondWord, int m, int n, MatrizDistancia *p);
+void InicializaMatrizDistancia(MatrizDistancia *mD, int SizeFirstWord, int SizeSecondWord);
+int Minimo(int Deletar, int Inserir, int Substituir);
+int distanciaEdicao(char *FirstWord, char *SecondWord, int m, int n);
+void CalculaOperacoes(MatrizDistancia *p, int m, int n);
+void PrintaMatriz(MatrizDistancia *p, int m, int n);
 
 #endif //PARTEB_DISTANCIAEDICAO_H
