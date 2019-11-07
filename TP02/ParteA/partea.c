@@ -430,13 +430,13 @@ void teste(TipoPiramide *piramide, TipoAnalise *analise, int quantidade){//funca
 	system("cls");
 
 	for (i = 0; i < quantidade; i++){ //vai rodar o numero de vezes que a pessoa desejar fazer o teste
-		tamanho = 1 + rand() % 39; //gera numeros aleatorios de 1 a 30
+		tamanho = 1 + rand() % 49; //gera numeros aleatorios de 1 a 30
 		contador = geraPiramide(i, tamanho, contador);
 		sprintf(nomeArquivo, "piramide%d", i);
 		lerArquivo(piramide, nomeArquivo);
 
 		//usado para testar as 3 implementacoes
-		printf ("\n\n ********************************************** Piramide de tamanho %d **********************************************\n\n", tamanho);
+		printf ("\n\n ********************************************** Piramide de tamanho %d **********************************************\n", tamanho);
 		for (j = 1; j < 4; j++){ //j e o tipo
 			solucaoTeste (piramide, analise, j);
 		}
