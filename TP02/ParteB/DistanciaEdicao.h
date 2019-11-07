@@ -1,7 +1,3 @@
-//
-// Created by caio on 11/5/19.
-//
-
 #ifndef PARTEB_DISTANCIAEDICAO_H
 #define PARTEB_DISTANCIAEDICAO_H
 
@@ -17,6 +13,6 @@ void InicializaMatrizDistancia(MatrizDistancia *mD, int SizeFirstWord, int SizeS
 int Minimo(int Deletar, int Inserir, int Substituir);
 int distanciaEdicao(char *FirstWord, char *SecondWord, int m, int n);
 void CalculaOperacoes(MatrizDistancia *p, int m, int n);
-void PrintaMatriz(MatrizDistancia *p, int m, int n);
+void imprimeMatriz(MatrizDistancia *p, int m, int n);
 
 #endif //PARTEB_DISTANCIAEDICAO_H

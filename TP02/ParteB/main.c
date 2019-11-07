@@ -33,9 +33,9 @@ int main() {
             printf ("\n****************************************************************************************");
             printf ("\n*                                                                                      *");
             printf ("\n*                            Escolha uma das opcoes abaixo                             *");
-            printf ("\n*                               1 - Distancia de edicao iterativo                      *");
-            printf ("\n*                               2 - Distancia de edicao recursivo                      *");
-            printf ("\n*                               3 - Sair                                               *");
+            printf ("\n*                           1 - Distancia de edicao iterativo                          *");
+            printf ("\n*                           2 - Distancia de edicao recursivo                          *");
+            printf ("\n*                           3 - Sair                                                   *");
             printf ("\n*                                                                                      *");
             printf ("\n****************************************************************************************");
             printf ("\n");
@@ -58,7 +58,7 @@ int main() {
                     InicializaMatrizDistancia(&h, SizeFirstWord+1, SizeSecondWord+1);
                     distanciaIterativo(FirstWord, SecondWord, SizeFirstWord+1, SizeSecondWord+1, &h);
                     CalculaOperacoes(&h, SizeFirstWord, SizeSecondWord);
-                    PrintaMatriz(&h, SizeFirstWord, SizeSecondWord);
+                    imprimeMatriz(&h, SizeFirstWord, SizeSecondWord);
                     break;
                 case 2:
                     FirstWord = (int*)malloc(46 * sizeof(int));
@@ -74,7 +74,7 @@ int main() {
                     distancia(FirstWord, SecondWord, SizeFirstWord+1, SizeSecondWord+1, &h);
                     printf("Resultado da menor distancia entre as palavras pelo algoritmo recursivo: %d\n", distanciaEdicao(FirstWord, SecondWord, SizeFirstWord, SizeSecondWord));
                     CalculaOperacoes(&h, SizeFirstWord, SizeSecondWord);
-                    PrintaMatriz(&h, SizeFirstWord, SizeSecondWord);
+                    imprimeMatriz(&h, SizeFirstWord, SizeSecondWord);
                     break;
                 case 3:
                     exit(0);
@@ -85,10 +85,10 @@ int main() {
             //menu para selecao das opcoes
             printf ("\n****************************************************************************************");
             printf ("\n*                                                                                      *");
-            printf ("\n*                            Escolha uma das opcoes abaixo                             *");
-            printf ("\n*                               1 - Distancia de edicao iterativo modo DEBUG           *");
-            printf ("\n*                               2 - Distancia de edicao recursivo modo DEBUG           *");
-            printf ("\n*                               3 - Sair                                               *");
+            printf ("\n*                             Escolha uma das opcoes abaixo                            *");
+            printf ("\n*                       1 - Distancia de edicao iterativo modo DEBUG                   *");
+            printf ("\n*                       2 - Distancia de edicao recursivo modo DEBUG                   *");
+            printf ("\n*                       3 - Sair                                                       *");
             printf ("\n*                                                                                      *");
             printf ("\n****************************************************************************************");
             printf ("\n");
@@ -108,7 +108,7 @@ int main() {
                         end_t = clock(); //Final da contagem do tempo
                         CalculaOperacoes(&h, SizeFirstWord, SizeSecondWord);
                         total_t = ((end_t - start_t)*1000/ CLOCKS_PER_SEC) + total_t;
-                        //PrintaMatriz(&h, SizeFirstWord, SizeSecondWord);
+                        //imprimeMatriz(&h, SizeFirstWord, SizeSecondWord);
                     }
                     printf("Tempo gasto em Milissegundos: %lf\n", total_t/10);
                     break;
@@ -123,7 +123,7 @@ int main() {
                         end_t = clock(); //Final da contagem do tempo
                         CalculaOperacoes(&h, SizeFirstWord, SizeSecondWord);
                         total_t = ((end_t - start_t)*1000/ CLOCKS_PER_SEC) + total_t;
-                        //PrintaMatriz(&h, SizeFirstWord, SizeSecondWord);
+                        //imprimeMatriz(&h, SizeFirstWord, SizeSecondWord);
                     }
                     printf("Tempo gasto em Milissegundos: %lf\n", total_t/10);
                     break;

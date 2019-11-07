@@ -1,7 +1,3 @@
-//
-// Created by Samuel on 11/5/19.
-//
-
 #include "DistanciaEdicao.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -157,7 +153,7 @@ int distanciaEdicao(char *FirstWord, char *SecondWord, int m, int n) {
                   (distanciaEdicao(FirstWord, SecondWord, m - 1, n - 1) + custo)); //Substituir
 }
 
-void PrintaMatriz(MatrizDistancia *p, int m, int n) {
+void imprimeMatriz(MatrizDistancia *p, int m, int n) {
     int i, j;
 
     printf("Matriz gerada:\n");
