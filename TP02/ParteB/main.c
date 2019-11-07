@@ -4,22 +4,26 @@
 #include "DistanciaEdicao.h"
 
 int main() {
-    char FirstWord[46];
-    char SecondWord[46];
-    int m = 0, n = 0;
-    ContabilizaOperacoes contabilizar;
 
-    InicializaOperacoes(&contabilizar); //Inicializa as variaveis da struct ContabilizaOperacoes
+    char *FirstWord;
+    char *SecondWord;
+    int SizeFirstWord = 0;
+    int SizeSecondWord = 0;
+    MatrizDistancia h;
+
+    FirstWord = (int*)malloc(46 * sizeof(int));
+    SecondWord = (int*)malloc(46 * sizeof(int));
     printf("Entre com a primeira palavra: \n");
-    scanf("%s", FirstWord);
+    gets(FirstWord);
     printf("Entre com a segunda palavra: \n");
-    scanf("%s", SecondWord);
-    m = strlen(FirstWord);
-    n = strlen(SecondWord);
-    //printf("m: %d\n", m);
-    //printf("n: %d\n", n);
-    printf("Resultado: %d\n", distanciaEdicao(FirstWord, SecondWord, m, n, 0, &contabilizar));
-    ImprimeQtdOperacoes(contabilizar);
-    printa();
+    gets(SecondWord);
+    SizeFirstWord = strlen(FirstWord);
+    SizeSecondWord = strlen(SecondWord);
+
+    InicializaMatrizDistancia(&h, SizeFirstWord+1, SizeSecondWord+1);
+    distanciaIterativo(FirstWord, SecondWord, SizeFirstWord+1, SizeSecondWord+1, &h);
+    CalculaOperacoes(&h, SizeFirstWord, SizeSecondWord);
+    printf("Resposta: %d\n", distanciaEdicao(FirstWord, SecondWord, SizeFirstWord, SizeSecondWord));
+    PrintaMatriz(&h, SizeFirstWord, SizeSecondWord);
     return 0;
 }
