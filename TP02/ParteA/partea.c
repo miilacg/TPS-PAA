@@ -511,6 +511,7 @@ void solucaoTeste(TipoPiramide *piramide, TipoAnalise *analise, int tipo){
 		soma = piramideMemoization(piramide, analise, caminho, 0, 0);
 		analise->tempoSoma = tempoFinalizado(tempo);
 		analise->memoriaSoma = (analise->qtdChamadaRecursiva * sizeof(int)) + analise->memoriaSoma; //memoria utilizada nas chamadas recursivas
+		memoriaTotal = analise->memoriaCaminho + analise->memoriaSoma;
 		
 		tempoInicial(&tempo);
 		caminhoPercorrido(piramide, caminho, analise);
@@ -529,6 +530,7 @@ void solucaoTeste(TipoPiramide *piramide, TipoAnalise *analise, int tipo){
 		tempoInicial(&tempo);
 		soma = piramideIterativa(piramide, caminho);
 		analise->tempoSoma = tempoFinalizado(tempo);
+		memoriaTotal = analise->memoriaCaminho + analise->memoriaSoma; 
 			 
 		tempoInicial(&tempo);
 		caminhoPercorrido(piramide, caminho, analise);
