@@ -136,7 +136,7 @@ int main(){
                 switch(verificacao){
 			        case 1:
 	                	for (i = 0; i<quantidade; i++){
-		                	tamanho = 1 + rand() % 50; //gera numeros aleatorios de 1 a 100
+		                	tamanho = 1 + rand() % 99; //gera numeros aleatorios de 1 a 100
 		                	contador = geraPiramide(i, tamanho, contador); //conta quantas piramides foram criadas
 						}
 						if (contador == quantidade){
