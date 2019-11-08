@@ -39,7 +39,7 @@ int main(){
                 scanf("%s", nomeArquivo);
                 leuArquivo = lerArquivo(&piramide, nomeArquivo);
                 if (leuArquivo){ //se o arquivo foi lido com sucesso
-                	system("cls");
+                	system("clear");
                 	printf ("\n Arquivo lido com sucesso!\n\n");
                 	
                 	//menu para selecao das opcoes
@@ -62,7 +62,7 @@ int main(){
 			        
 			        switch(opc){
 			            case 1: //recursivo
-			            	system("cls");
+			            	system("clear");
 			            	printf ("\n ****************************************************************************************");
 						    printf ("\n *                                                                                      *");
 						    printf ("\n *                           Voce deseja ativar o modo debug?                           *");
@@ -85,7 +85,7 @@ int main(){
 		                    solucao(&piramide, &analise, opc, modoAnalise);
 		            	break;
 		            	case 2: //memoization
-		            		system("cls");
+		            		system("clear");
 			            	printf ("\n ****************************************************************************************");
 						    printf ("\n *                                                                                      *");
 						    printf ("\n *                           Voce deseja ativar o modo debug?                           *");
@@ -108,7 +108,7 @@ int main(){
 		                    solucao(&piramide, &analise, opc, modoAnalise);
 		            	break;
 		            	case 3: //iterativa
-		            		system("cls");
+		            		system("clear");
 			            	printf ("\n ****************************************************************************************");
 						    printf ("\n *                                                                                      *");
 						    printf ("\n *                           Voce deseja ativar o modo debug?                           *");
@@ -130,7 +130,7 @@ int main(){
 							analise.qtdChamadaRecursiva = 0;
 		                    solucao(&piramide, &analise, opc, modoAnalise);
 		            	break;
-		            		system ("cls");
+		            		system ("clear");
 		            	case 4: //voltar
 		            	break;
 		                case 5: //sair
@@ -185,7 +185,7 @@ int main(){
 					break;
 				}			        	
 	        break;	
-	        system ("cls");	
+	        system ("clear");	
             case 4: //sair
             	exit(0);	
 			break;						

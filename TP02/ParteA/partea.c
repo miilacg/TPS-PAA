@@ -194,7 +194,7 @@ void solucao(TipoPiramide *piramide, TipoAnalise *analise, int tipo, int modoAna
             caminho[i][j] = 0;
         }
     }
-    system("cls");
+    system("clear");
 	if (tipo == 1){//recursivo
 		//memoria utilizada na matriz caminho
 		//essa matriz e uma auxiliar para impressao da rota
@@ -426,10 +426,10 @@ void teste(TipoPiramide *piramide, TipoAnalise *analise, int quantidade){//funca
 	//tipo - qual metodo a pessoa quer testar
 	int i, j, contador = 0, tamanho;
 	char nomeArquivo[20];
-	system("cls");
+	system("clear");
 
 	for (i = 0; i < quantidade; i++){ //vai rodar o numero de vezes que a pessoa desejar fazer o teste
-		tamanho = 39; //gera numeros aleatorios de 1 a 30
+		tamanho = 1 + rand()%99; //gera numeros aleatorios de 1 a 30
 		contador = geraPiramide(i, tamanho, contador);
 		sprintf(nomeArquivo, "piramide%d", i);
 		lerArquivo(piramide, nomeArquivo);
