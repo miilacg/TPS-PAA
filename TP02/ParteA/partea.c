@@ -433,18 +433,17 @@ void teste(TipoPiramide *piramide, TipoAnalise *analise, int quantidade){//funca
 		contador = geraPiramide(i, tamanho, contador);
 		sprintf(nomeArquivo, "piramide%d", i);
 		lerArquivo(piramide, nomeArquivo);
-		
-		//inicializacao das variaveis de analise
-		analise->tempoSoma = 0;
 		analise->tempoCaminho = 0;
-		analise->memoriaSoma = 0;
-		analise->memoriaCaminho = 0;
-		analise->qtdChamadaRecursiva = 0;
-		analise->tempoImpressao = 0;
 		
 		//usado para testar as 3 implementacoes
 		printf ("\n\n ********************************************** Piramide de tamanho %d **********************************************\n", tamanho);
 		for (j = 1; j < 4; j++){ //j e o tipo
+			//inicializacao das variaveis de analise
+			analise->tempoSoma = 0;
+			analise->memoriaSoma = 0;
+			analise->memoriaCaminho = 0;
+			analise->qtdChamadaRecursiva = 0;
+			analise->tempoImpressao = 0;
 			solucaoTeste (piramide, analise, j);
 		}
 		if (contador == quantidade)
