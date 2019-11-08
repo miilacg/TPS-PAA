@@ -76,6 +76,12 @@ int main(){
 					            scanf ("%d", &modoAnalise);
 					        }while (modoAnalise < 0 || modoAnalise > 1); //garante que a opcao de entrada sera valida
 					        
+							//inicializacao das variaveis de analise
+							analise.tempoSoma = 0;
+							analise.tempoCaminho = 0;
+							analise.memoriaSoma = 0;
+							analise.memoriaCaminho = 0;
+							analise.qtdChamadaRecursiva = 0;
 		                    solucao(&piramide, &analise, opc, modoAnalise);
 		            	break;
 		            	case 2: //memoization
@@ -93,6 +99,12 @@ int main(){
 					            scanf ("%d", &modoAnalise);
 					        }while (modoAnalise < 0 || modoAnalise > 1); //garante que a opcao de entrada sera valida
 					        
+					        //inicializacao das variaveis de analise
+							analise.tempoSoma = 0;
+							analise.tempoCaminho = 0;
+							analise.memoriaSoma = 0;
+							analise.memoriaCaminho = 0;
+							analise.qtdChamadaRecursiva = 0;
 		                    solucao(&piramide, &analise, opc, modoAnalise);
 		            	break;
 		            	case 3: //iterativa
@@ -110,6 +122,12 @@ int main(){
 					            scanf ("%d", &modoAnalise);
 					        }while (modoAnalise < 0 || modoAnalise > 1); //garante que a opcao de entrada sera valida
 					        
+					        //inicializacao das variaveis de analise
+							analise.tempoSoma = 0;
+							analise.tempoCaminho = 0;
+							analise.memoriaSoma = 0;
+							analise.memoriaCaminho = 0;
+							analise.qtdChamadaRecursiva = 0;
 		                    solucao(&piramide, &analise, opc, modoAnalise);
 		            	break;
 		            		system ("cls");
