@@ -20,11 +20,11 @@ typedef struct Analise{
 
 //algoritmos de casamento
 int forcaBruta(TipoTexto texto, TipoPadrao *padrao);
-int BMHS(TipoTexto texto, TipoPadrao *padrao);
 
 //funcoes auxiliares
 int lerArquivo(TipoTexto *texto, char *nomeArquivo);
 void calculaTamanho(TipoTexto *texto, char *nomeArquivo);
+void imprimeTeste(TipoTexto *texto);
 void imprimeTexto(char *nomeArquivo);
 void solucao(TipoTexto texto, TipoPadrao *padrao, TipoAnalise *analise, int algoritmo, int modoAnalise);
 void tempoInicial(clock_t *tempo);

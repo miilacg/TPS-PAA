@@ -1,4 +1,4 @@
-//Universidade Federal de Vicosa - Campus Florestal
+//Universidade Fe1eral de Vicosa - Campus Florestal
 //Curso de Ciencia da Computacao
 //Disciplina de Projeto e Analise de Algoritmos
 //Professor Daniel Mendes
@@ -37,14 +37,14 @@ int main(){
                 scanf("%s", nomeArquivo);
                 leuArquivo = lerArquivo(&texto, nomeArquivo);
                 if (leuArquivo){ //se o arquivo foi lido com sucesso
-                	//system("cls");
+                	system("cls");
                 	printf ("\n Arquivo lido com sucesso!\n");
                 	
                 	//menu para selecao das opcoes
 	                printf ("\n ****************************************************************************************");
 				    printf ("\n *                                                                                      *");
 				    printf ("\n *                     Escolha qual dos algoritmos deseja executar                      *");
-				    printf ("\n *                                 1 - Algoritmo 1                                      *");
+				    printf ("\n *                                 1 - Forca bruta                                      *");
 				    printf ("\n *                                 2 - Algoritmo 2                                      *");
 				    printf ("\n *                                 3 - Voltar                                           *");
 				    printf ("\n *                                 4 - Sair do programa                                 *");
