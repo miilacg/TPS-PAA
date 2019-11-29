@@ -35,7 +35,49 @@ int forcaBruta(TipoTexto texto, TipoPadrao *padrao){
 }
 
 //algoritmo 2
+int BMHS(TipoTexto texto, TipoPadrao *padrao){
+    long int i, j, k, d[MAXTAM + 1], o = 0;
+    
+    padrao->tamanhoPadrao = strlen(padrao->palavraPadrao);
+	padrao->qtdOcorrencia = 0;
+	
+    //Pre-processamento para se obter a tabela de deslocamentos.
+    for (j = 0; j <= MAXTAM; j++){
+    	d[j] = padrao->tamanhoPadrao;
+	}        
 
+    for (j = 0; j <= padrao->tamanhoPadrao; j++){
+    	d[padrao->palavraPadrao[j - 1]] = padrao->tamanhoPadrao - j + 1;
+	}       
+
+    i = padrao->tamanhoPadrao;
+
+    // Pesquisa
+    while (i <= texto.tamanho) {
+        k = i;
+        j = padrao->tamanhoPadrao;
+        
+        //Pesquisa pelo sufixo
+        while (toupper(texto.caracteres[k - 1]) == toupper(padrao->palavraPadrao[j - 1]) && j >= 0){
+            k--;
+            j--;
+        }
+        if (j == 0) {
+            padrao->posicaoOcorrencias[o] = i - 1;
+            padrao->qtdOcorrencia ++;
+            o++;
+        }
+        
+        // Deslocamento da janela 
+        i = i + d[texto.caracteres[i]];
+    }
+
+    if (padrao->qtdOcorrencia == 0){
+        return 0;
+	}else{
+		return 1;
+	}
+}
 
 //funcoes auxiliares
 int lerArquivo(TipoTexto *texto, char *nomeArquivo){//le o arquivo
@@ -170,9 +212,9 @@ void solucao(TipoTexto texto, TipoPadrao *padrao, TipoAnalise *analise, int algo
 		}		
 	}
 	
-	if (algoritmo == 2){//algoritmo 2
+	if (algoritmo == 2){//algoritmo BMHS
 		tempoInicial(&tempo);
-		//verificacao = chamar o algoritmo 2
+		verificacao = BMHS(texto, padrao);
 		analise->tempo = tempoFinalizado(tempo);
 		
 		if (verificacao == 0){

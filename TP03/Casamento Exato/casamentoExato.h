@@ -1,6 +1,7 @@
 #include <time.h>
 
 #define modoDebug 1 //definir como 1 se deseja ter as informações do modoDebug e 0 se não desejar
+#define MAXTAM 256
 
 typedef struct Texto{
     char *caracteres; //vetor para alocar o texto lido
@@ -20,6 +21,7 @@ typedef struct Analise{
 
 //algoritmos de casamento
 int forcaBruta(TipoTexto texto, TipoPadrao *padrao);
+int BMHS(TipoTexto texto, TipoPadrao *padrao);
 
 //funcoes auxiliares
 int lerArquivo(TipoTexto *texto, char *nomeArquivo);

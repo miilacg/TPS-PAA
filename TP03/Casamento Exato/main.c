@@ -45,7 +45,7 @@ int main(){
 				    printf ("\n *                                                                                      *");
 				    printf ("\n *                     Escolha qual dos algoritmos deseja executar                      *");
 				    printf ("\n *                                 1 - Forca bruta                                      *");
-				    printf ("\n *                                 2 - Algoritmo 2                                      *");
+				    printf ("\n *                                 2 - BMHS                                             *");
 				    printf ("\n *                                 3 - Voltar                                           *");
 				    printf ("\n *                                 4 - Sair do programa                                 *");
 				    printf ("\n *                                                                                      *");
@@ -58,7 +58,7 @@ int main(){
 			        }while (opc < 0 || opc > 4); //garante que a opcao de entrada sera valida
 			        
 			        switch(opc){
-			            case 1: //Algoritmo 1	
+			            case 1: //Algoritmo 1 - forca bruta
 							system("cls");
 					        printf ("\n Entre com o padrao que deseja buscar: ");
 					        scanf("%s", &busca); 
@@ -78,13 +78,13 @@ int main(){
 					        }while (modoAnalise < 0 || modoAnalise > 1); //garante que a opcao de entrada sera valida
 					        
 		                    solucao(texto, &padrao, &analise, opc, modoAnalise);
-		            	break;/*
-		            	case 2: //algoritmo 2
+		            	break;
+		            	case 2: //algoritmo 2 - BMHS
 		            		system("cls");
-					        printf (" Entre com o padrao que deseja buscar: ");
-					        scanf ("%c", &busca);
+					        printf ("\n Entre com o padrao que deseja buscar: ");
+					        scanf("%s", &busca); 
 					        padrao.palavraPadrao = busca;
-			        
+			        		
 			            	printf ("\n ****************************************************************************************");
 						    printf ("\n *                                                                                      *");
 						    printf ("\n *                           Voce deseja ativar o modo debug?                           *");
@@ -98,8 +98,8 @@ int main(){
 					            scanf ("%d", &modoAnalise);
 					        }while (modoAnalise < 0 || modoAnalise > 1); //garante que a opcao de entrada sera valida
 					        
-					        solucao(&texto, padrao, &analise, opc, modoAnalise, padrao);
-		            	break;*/
+					        solucao(texto, &padrao, &analise, opc, modoAnalise);
+		            	break;
 		            	case 3: //voltar
 		            	break;
 		                case 4: //sair
