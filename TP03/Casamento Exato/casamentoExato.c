@@ -41,12 +41,12 @@ int BMHS(TipoTexto texto, TipoPadrao *padrao){
     padrao->tamanhoPadrao = strlen(padrao->palavraPadrao);
 	padrao->qtdOcorrencia = 0;
 	
-    //Pre-processamento para se obter a tabela de deslocamentos.
+    //Pre-processamento do padrão para se obter a tabela de deslocamentos.
     for (j = 0; j <= MAXTAM; j++){
-    	d[j] = padrao->tamanhoPadrao;
+    	d[j] = padrao->tamanhoPadrao + 1;
 	}        
 
-    for (j = 0; j <= padrao->tamanhoPadrao; j++){
+    for (j = 1; j <= padrao->tamanhoPadrao; j++){
     	d[padrao->palavraPadrao[j - 1]] = padrao->tamanhoPadrao - j + 1;
 	}       
 
@@ -57,8 +57,7 @@ int BMHS(TipoTexto texto, TipoPadrao *padrao){
         k = i;
         j = padrao->tamanhoPadrao;
         
-        //Pesquisa pelo sufixo
-        while (toupper(texto.caracteres[k - 1]) == toupper(padrao->palavraPadrao[j - 1]) && j >= 0){
+        while (toupper(texto.caracteres[k - 1]) == toupper(padrao->palavraPadrao[j - 1]) && j > 0){
             k--;
             j--;
         }
@@ -172,19 +171,19 @@ void solucao(TipoTexto texto, TipoPadrao *padrao, TipoAnalise *analise, int algo
 		
 		if (verificacao == 0){
 			if (modoAnalise == modoDebug){
-				printf ("\n ********************************** Modo analise ativo **********************************\n\n");
+				printf ("\n ****************************** Modo analise ativo ******************************\n\n");
 				printf ("\n Implementacao escolhida: Forca bruta");
 				printf ("\n Nao foi encontrada nenhuma recorrencia do padrao");
 				printf ("\n Tamanho do texto: %d", texto.tamanho);
 				printf ("\n Tempo utilizado na busca: %.5lf ms \n\n", analise->tempo);
 			}else{
-				printf ("\n ******************************** Modo analise desativado *******************************\n\n");
+				printf ("\n **************************** Modo analise desativado ***************************\n\n");
 				printf ("\n Implementacao escolhida: Forca Bruta");
 				printf ("\n Nao foi encontrada nenhuma recorrencia do padrao \n\n");
 			}
 		}else{
 			if (modoAnalise == modoDebug){
-				printf ("\n ********************************** Modo analise ativo **********************************\n\n");				
+				printf ("\n ****************************** Modo analise ativo ******************************\n\n");				
 				printf ("\n Implementacao escolhida: Forca Bruta");
 				printf ("\n Numero de padroes encontrados: %d", padrao->qtdOcorrencia);
 				printf ("\n Ocorrencias dos padroes nas posicoes: ");
@@ -197,7 +196,7 @@ void solucao(TipoTexto texto, TipoPadrao *padrao, TipoAnalise *analise, int algo
 				printf ("\n Tamanho do texto: %d", texto.tamanho);
 				printf ("\n Tempo utilizado na busca: %.5lf ms\n\n", analise->tempo);
 			}else{
-				printf ("\n ******************************** Modo analise desativado *******************************\n\n");
+				printf ("\n **************************** Modo analise desativado ***************************\n\n");
 				printf ("\n Implementacao escolhida: Forca bruta");
 				printf ("\n Numero de padroes encontrados: %d", padrao->qtdOcorrencia);
 				printf ("\n Ocorrencias dos padroes nas posicoes: ");
@@ -219,20 +218,20 @@ void solucao(TipoTexto texto, TipoPadrao *padrao, TipoAnalise *analise, int algo
 		
 		if (verificacao == 0){
 			if (modoAnalise == modoDebug){
-				printf ("\n ********************************** Modo analise ativo **********************************\n\n");
-				printf ("\n Implementacao escolhida: Forca bruta");
+				printf ("\n ****************************** Modo analise ativo ******************************\n\n");
+				printf ("\n Implementacao escolhida: BMHS");
 				printf ("\n Nao foi encontrada nenhuma recorrencia do padrao");
 				printf ("\n Tamanho do texto: %d", texto.tamanho);
 				printf ("\n Tempo utilizado na busca: %.5lf ms \n\n", analise->tempo);
 			}else{
-				printf ("\n ******************************** Modo analise desativado *******************************\n\n");
-				printf ("\n Implementacao escolhida: Forca Bruta");
+				printf ("\n **************************** Modo analise desativado ***************************\n\n");
+				printf ("\n Implementacao escolhida: BMHS");
 				printf ("\n Nao foi encontrada nenhuma recorrencia do padrao \n\n");
 			}
 		}else{
 			if (modoAnalise == modoDebug){
-				printf ("\n ********************************** Modo analise ativo **********************************\n\n");				
-				printf ("\n Implementacao escolhida: Forca Bruta");
+				printf ("\n ****************************** Modo analise ativo ******************************\n\n");				
+				printf ("\n Implementacao escolhida: BMHS");
 				printf ("\n Numero de padroes encontrados: %d", padrao->qtdOcorrencia);
 				printf ("\n Ocorrencias dos padroes nas posicoes: ");
 				for (i = 0; i < padrao->qtdOcorrencia; i++){
@@ -244,8 +243,8 @@ void solucao(TipoTexto texto, TipoPadrao *padrao, TipoAnalise *analise, int algo
 				printf ("\n Tamanho do texto: %d", texto.tamanho);
 				printf ("\n Tempo utilizado na busca: %.5lf ms\n\n", analise->tempo);
 			}else{
-				printf ("\n ******************************** Modo analise desativado *******************************\n\n");
-				printf ("\n Implementacao escolhida: Forca bruta");
+				printf ("\n **************************** Modo analise desativado ***************************\n\n");
+				printf ("\n Implementacao escolhida: BMHS");
 				printf ("\n Numero de padroes encontrados: %d", padrao->qtdOcorrencia);
 				printf ("\n Ocorrencias dos padroes nas posicoes: ");
 				for (i = 0; i < padrao->qtdOcorrencia; i++){
