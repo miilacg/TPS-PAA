@@ -1,8 +1,15 @@
+//Universidade Fe1eral de Vicosa - Campus Florestal
+//Curso de Ciencia da Computacao
+//Disciplina de Projeto e Analise de Algoritmos
+//Professor Daniel Mendes
+//Alunos: Camila C. Guimaraees - 2256 e Samuel Silva - 2662
+//Trabalho Pratico 03
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "ParteC.h"
+#include "ParteC.c"
 
 int main() {
     VetorChar *V;

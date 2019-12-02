@@ -1,7 +1,3 @@
-//
-// Created by Samuel on 29/11/2019.
-//
-
 #ifndef PARTEC_PARTEC_H
 #define PARTEC_PARTEC_H
 
