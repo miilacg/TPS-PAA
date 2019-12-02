@@ -17,14 +17,14 @@ int main(){
 
 	do{			
 		//menu para selecao das opcoes
-        printf ("\n ****************************************************************************************");
-	    printf ("\n *                                                                                      *");
-	    printf ("\n *                            Escolha uma das opcoes abaixo                             *");
-	    printf ("\n *                           1 - Carregar um arquivo de dados                           *");
-	    printf ("\n *                           2 - Imprimir arquivo                                       *");
-	    printf ("\n *                           3 - Sair do programa                                       *");
-	    printf ("\n *                                                                                      *");
-	    printf ("\n ****************************************************************************************");
+        printf ("\n ********************************************************************************");
+	    printf ("\n *                                                                              *");
+	    printf ("\n *                        Escolha uma das opcoes abaixo                         *");
+	    printf ("\n *                       1 - Carregar um arquivo de dados                       *");
+	    printf ("\n *                       2 - Imprimir arquivo                                   *");
+	    printf ("\n *                       3 - Sair do programa                                   *");
+	    printf ("\n *                                                                              *");
+	    printf ("\n ********************************************************************************");
 	    printf ("\n");
         do{
             printf (" Entre com a opcao valida: ");
@@ -37,19 +37,19 @@ int main(){
                 scanf("%s", nomeArquivo);
                 leuArquivo = lerArquivo(&texto, nomeArquivo);
                 if (leuArquivo){ //se o arquivo foi lido com sucesso
-                	system("cls");
+                	//system("cls");
                 	printf ("\n Arquivo lido com sucesso!\n");
                 	
                 	//menu para selecao das opcoes
-	                printf ("\n ****************************************************************************************");
-				    printf ("\n *                                                                                      *");
-				    printf ("\n *                     Escolha qual dos algoritmos deseja executar                      *");
-				    printf ("\n *                                 1 - Forca bruta                                      *");
-				    printf ("\n *                                 2 - BMHS                                             *");
-				    printf ("\n *                                 3 - Voltar                                           *");
-				    printf ("\n *                                 4 - Sair do programa                                 *");
-				    printf ("\n *                                                                                      *");
-				    printf ("\n ****************************************************************************************");
+	                printf ("\n ********************************************************************************");
+				    printf ("\n *                                                                              *");
+				    printf ("\n *                 Escolha qual dos algoritmos deseja executar                  *");
+				    printf ("\n *                             1 - Forca bruta                                  *");
+				    printf ("\n *                             2 - BMHS                                         *");
+				    printf ("\n *                             3 - Voltar                                       *");
+				    printf ("\n *                             4 - Sair do programa                             *");
+				    printf ("\n *                                                                              *");
+				    printf ("\n ********************************************************************************");
 
 				    printf ("\n");
 			        do{
@@ -63,14 +63,14 @@ int main(){
 					        printf ("\n Entre com o padrao que deseja buscar: ");
 					        scanf("%s", &busca); 
 					        padrao.palavraPadrao = busca;
-									            	
-			            	printf ("\n ****************************************************************************************");
-						    printf ("\n *                                                                                      *");
-						    printf ("\n *                           Voce deseja ativar o modo debug?                           *");
-						    printf ("\n *                                      0 - Nao                                         *");
-						    printf ("\n *                                      1 - Sim                                         *");								    
-						    printf ("\n *                                                                                      *");
-						    printf ("\n ****************************************************************************************");
+					        
+			            	printf ("\n ********************************************************************************");
+						    printf ("\n *                                                                              *");
+						    printf ("\n *                       Voce deseja ativar o modo debug?                       *");
+						    printf ("\n *                                  0 - Nao                                     *");
+						    printf ("\n *                                  1 - Sim                                     *");								    
+						    printf ("\n *                                                                              *");
+						    printf ("\n ********************************************************************************");
 						    printf ("\n");
 					        do{
 					            printf (" Entre com a opcao valida: ");
@@ -85,13 +85,13 @@ int main(){
 					        scanf("%s", &busca); 
 					        padrao.palavraPadrao = busca;
 			        		
-			            	printf ("\n ****************************************************************************************");
-						    printf ("\n *                                                                                      *");
-						    printf ("\n *                           Voce deseja ativar o modo debug?                           *");
-						    printf ("\n *                                      0 - Nao                                         *");
-						    printf ("\n *                                      1 - Sim                                         *");								    
-						    printf ("\n *                                                                                      *");
-						    printf ("\n ****************************************************************************************");
+			            	printf ("\n ********************************************************************************");
+						    printf ("\n *                                                                              *");
+						    printf ("\n *                       Voce deseja ativar o modo debug?                       *");
+						    printf ("\n *                                  0 - Nao                                     *");
+						    printf ("\n *                                  1 - Sim                                     *");								    
+						    printf ("\n *                                                                              *");
+						    printf ("\n ********************************************************************************");
 						    printf ("\n");
 					        do{
 					            printf (" Entre com a opcao valida: ");
