@@ -11,6 +11,12 @@ C:/Users/Samuel/CLionProjects/ParteC/ParteC.h
 C:/Users/Samuel/CLionProjects/ParteC/main.c
 stdio.h
 -
+stdlib.h
+-
+string.h
+-
+time.h
+-
 ParteC.h
 C:/Users/Samuel/CLionProjects/ParteC/ParteC.h
 
