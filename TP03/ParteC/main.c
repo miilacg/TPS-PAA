@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "ParteC.c"
+#include "ParteC.h"
 
 int main() {
     VetorChar *V;
